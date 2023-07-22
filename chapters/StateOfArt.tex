@@ -1,0 +1,50 @@
+%cap2 stato dell'arte su metodi ingegneristisci per la prevenzione delle cadute, mediante utilizzo di sensori indossabili, possibili dataset disponibili
+\section{Introduction}
+This chapter aims at 
+%The "state of the art" refers to the current state of knowledge, technologies, and research on a specific topic or field, particularly in academic and scientific contexts. This section provides a comprehensive and up-to-date overview of the literature and key developments related to fall detection and risk assessment in older adults using wearable sensors.
+\section{Definition of the Research Field}
+%This section starts by defining the scope of the research field and introducing the main concepts and terms used in the area of interest.
+\section{Literature Review}
+%The literature review presents a synthesis of the most significant and influential works published on the topic. The studies are organized logically, such as in chronological or thematic order, highlighting the main findings and outcomes from previous research.
+A first review on the state of the art was proposed by \cite{FallRiskAssessment_WearableSensors_SystematicReview}. The paper aims at identifying the most common technologies utilized to recognize the risk of fall by evaluating selected articles, from 2002 to 2019, based on a predefined criteria,to detect a fall and to classify the elderly as "faller" and "not faller".  
+Focusing on fall risk prediction articles, the authors highlighted that the most common wearable sensor used is the accelerometer, together with the gyroscope. These devices were used in the 17.2\% of the publications to capture gait data. In particular, the best locations to identify the level of risk are the lumbar and waist areas, which were the most popular among the articles considered. Moreover, their sampling rate were mostly 50Hz or 100Hz, although the parameters ranged from 4Hz to 256 Hz. 
+Lastly, the methodology most used is the feature extraction, compared to machine learning alone. \\
+
+Predicting falls is a task most centered around the elderly who should be, first of all, classified at risk of falling. An experiment carried out by Rivolta et al. \cite{TinettiScale}, studied the data acquired from 90 participants (79 elderly and 11 healthy volunteers) located into two rehabilitation centers in Northen Italy to asses their risk of falling using the data captured by only one accelerometer attached to the waist. The aim of the study was to create an automated system that could be used at home to predict the risk of a fall.
+The study is based on the Tinetti Scale; therefore, the tasks that the participants were asked to perform were both the Gait and Balance activities that comprise the test. Later, this data was used to first study the features obtained by pre-processing the data to establish the differences between high risk fallers and low risk fallers. Secondly, the features were selected using a linear regression to determine those related to the Tinetti Scale; Thirdly, the reduced feature set was used to train two classification models (linear model and artificial neural network) to automatically detect those affected by the risk of fall; Lastly, the scores from the Tinetti Scale were tested to determine which ones were more affected by misjudgements. 
+
+As for the first task, the authors found out that 12 out of 21 features were different among the two groups, while BMI is not significative to determine the difference between high and low risk.
+Moreover, as regards balance, the Standing UP Duration, Balance Recovery after nudge and regularity of standing were highly different; whereas the 360 degree turn and the sitting down activities do not differ between the two groups.
+As for gait, instead, all the features differ (Step Frequency, Step Regularity - vertical axis, Surrogated Step Height and Trunk Lateral Sway) except Step Regularity computed on the horizontal axis. 
+
+For the second task, Rivolta et al. used LASSO with parameter $\lambda$ = 0.7 to reduce the set to 9 features: Triangle duration along the Anterior/Posterior axis (determined intersecting two straight lines having the maximum and minimum slopes, with the
+AP baseline before and after standing up),  Immediate Standing Unbalance for the Standing Up Tinetti Task, Lateral Oscillations of the participant's body when nudged by the specialist, Sample Entropy for Task 5 of the test, and Step Regularity on the vertical axis and Trunk Lateral Sway for the walking task, BMI, Gender and Age.
+
+The classification task involves one regression and one binary classification. The regression performance was measured by the Pearson's correlation coefficient while classification performances were assessed using sensitivity and specificity.
+First, the linear regression was trained on the parameters of the Tinetti scores in the training set. Then the artificial neural network was used to understand if it would have a lower number of misclassifications compared to the first approach. 
+First, a standard linear regression was used to fit the LM parameters
+on the Tinetti scores of the training set. The model was applied on the
+test set and the estimated scores were dichotomized at 18 as in the
+regular Tinetti test.
+Second, an ANN was used to verify whether a non-linear transformation of the feature set could provide a lower misclassification error.
+For the regression, the obtained sensitivity was of 0.71 and the specificity was 0.81.
+For the artificial network, the obtained sensitivity was of 0.86 and the specificity was 0.90 on the test set.
+
+For the last task, to assess the importance of a misjudgement of the parameters of the Tinetti test in deciding the fall risk, each element was changed in value (choosing from the possible value ranges) and the authors assessed how many participants changed class (from high risk to low risk and viceversa).  
+
+For the balance parts, the most important features were standing balance
+with eyes closed, nudge and standing balance with eyes opened, while the less important was sitting balance.
+For the gait parts, path related to the floor, trunk sway and walking stance showed the highest classification error when changed, together with walking stance, a determining factor to classify the patients as low risk when changed to 1.
+For both parts, a wrong standing balance led to the highest error rate.
+
+
+\section{Data Availability}
+A common problem in applications involving data acquired from any sort of patient is the data availability. Since new systems aim at improving the quality of therapies, make them easily accessible, or help professionals in their everyday activities, these objectives need data directly acquired from those affected to define and create systems that work in the correct way. This involves problems related to the privacy of the patients who make their information accessible to only the part that expressively asked for the data. This usually comes with a (rightful) prohibition of distribution of the fore mentioned data, which usually includes private information about the patients involved. The downside is a limitation of the progress of the research. 
+A few public datasets containing the anonymized data are available for everyone to use; other can be accessed upon request, and others are not publicly available. 
+
+\section{Challenges}
+%This part identifies gaps in the research field and challenges that remain unresolved. Addressing these gaps can justify the relevance of your own research and demonstrate how it contributes to advancing the discipline.
+\section{Emerging Trends}
+%This section describes any new trends or research directions that are emerging in the field. This may include the introduction of novel technologies, methodologies, or conceptual approaches.
+\section{Conclusion}
+%The conclusion summarizes the key points presented in the "state of the art" section and emphasizes the significance of continuing research in the field. It provides an overview of how your own work fits into the context of the existing literature and how it can contribute to addressing the identified gaps.
