@@ -37,10 +37,51 @@ with eyes closed, nudge and standing balance with eyes opened, while the less im
 For the gait parts, path related to the floor, trunk sway and walking stance showed the highest classification error when changed, together with walking stance, a determining factor to classify the patients as low risk when changed to 1.
 For both parts, a wrong standing balance led to the highest error rate.
 
+Another article used random forest algorithms to classify frailty and falling history in seniors using plantar pressure measurement insoles \cite{RandomForestInsoles}. This study aimed at providing an analysis on the gait of the elderly using insoles able to capture seven signals coming from each foot. Then, the data has been processed to obtain the determining features of the gait, obtaining up to 182 features later analyzed using random forest algorithms. 
+The dataset used for the study is comprised of 774 elderly people from Japan. 
+The experiment involved different tasks:
+\begin{itemize}
+    \item A 45s standing balance test;
+    \item 20m walking trail (10m n forward direction, then a turn and another 10m in the backward direction)
+\end{itemize}
+
+A total of 203 subjects were considered frail by using the Kihon checklist, while 45 subjects who could not remember whether they had fallen in the 12 months prior to the study were excluded. Another 17 subjects were excluded from the analysis due to errors during the collection of the data. Overall, 712 subjects were used for the study. 
+A total of 5 categories for features were extracted from the walking data:
+\begin{description}
+    \item[Frequency Domain Analysis] A fast Fourier transform was performed after the output of the 14 sensors was summed at each sampling point to integrate the temporal information on only one time series.This category includes four extracted features.
+    \item[Peak analysis and area under the curves]First, three parameters were extracted for each isolated step and each sensor: maximum pressure,the time at which this maximum pressure occurred relative to the total stance time, the area under the pressure curve was extracted for each isolated step and for each sensor. Second, the four following data features were calculated for each trial and each of the three parameters: the average of all the left foot steps, the standard deviation of all the left foot isolated steps, the standard deviation of all isolated steps of both feet, and the left and right foot average difference. Thus, this results in 84 extracted features in this category.
+    \item[1-foot COP trajectory analysis] The COP trajectory was computed for each stance phase of each isolated step. First, the following 13 parameters were extracted: the minimum and maximum values on x and y, x and y coordinates at the double to single stance and single to double stance points, x coordinates of COP at the y coordinates of the center midfoot and center forefoot sensors, respectively; the range of variations on x and y; and the center of pressure excursion index, calculated as the ratio of COP trajectory excursion on the distance between the lateral and medial forefoot sensors. Second, the four following data features were calculated for each trial and each of the 13 parameters: the average of all the left foot isolated steps, the standard deviation of all the left foot isolated steps,the standard deviation of all isolated steps of both feet, and the left and right foot average difference. This category included 52 extracted features.
+    \item[Gait phase analysis] The following two parameters were computed for each isolated step: stance phase duration and percentage of double support duration relative to the whole stance phase. Then, the following four features were extracted for each trial and each of the two parameters: average of all the steps from the left foot, standard deviation of all the steps from the left foot, the standard deviation of all isolated steps of both feet, and the left and right foot average difference. This subcategory includes a total of 8 extracted features.
+    \item[Wavelet analysis] For each stance phase of each isolated step, the envelope of the 7-sensor of the left foot was computed. This category of features is based on the characteristics of the two waves, which characterize the plantar pressure pattern during the stance phase. First, the following 15 parameters were computed: the distance between the first and second peaks, height of the first peak, height of the second peak, height of valley, the difference between the heights of the peaks, ratio of the height of the first peak to one of the valleys, ratio of the height of the second peak to one of the valleys, difference between these two ratios, width of the first peak, width of second peaks, difference between these two widths, slope rate from the starting point of the stance phase to the first peak, slope rate from the first peak to valley, slope rate from valley to the second peak, slope rate from the second peak to the endpoint of stance phase. Second, the average and standard deviation of all the steps from the left foot were calculated, resulting in the extraction of two features for 15 parameters. This category included 30 extracted features.
+\end{description}
+
+Lastly, random forest models were trained to classify the frail from the healthy using scikit-learn. The training procedure was set so that each forest model was composed of 200 decision trees. Each tree is built by successfully splitting its nodes until the Gini impurity score equals zero until all data points in the leaf nodes correspond to the same class.
+Models showed low classification performances (average balanced accuracy: 0.57±0.05, weighted F1-score: 0.556±0.034).
+Then, the models were validated using a 5-fold cross-validation procedure.  Alternatively, random forest models were constructed and tested using a nested cross-validation procedure. 
+The random forest classifiers showed an average balanced accuracy of 0.75±0.04 and an average weighted F1-score of 0.77±0.03 for the recognition of frail vs. non-frail subjects.
 
 \section{Data Availability}
 A common problem in applications involving data acquired from any sort of patient is the data availability. Since new systems aim at improving the quality of therapies, make them easily accessible, or help professionals in their everyday activities, these objectives need data directly acquired from those affected to define and create systems that work in the correct way. This involves problems related to the privacy of the patients who make their information accessible to only the part that expressively asked for the data. This usually comes with a (rightful) prohibition of distribution of the fore mentioned data, which usually includes private information about the patients involved. The downside is a limitation of the progress of the research. 
-A few public datasets containing the anonymized data are available for everyone to use; other can be accessed upon request, and others are not publicly available. 
+A few public datasets containing the anonymized data are available for everyone to use; other can be accessed upon request, and others are not publicly available. The focus of this thesis revolves around data that has not been processed prior to the release of the dataset to the scientific community. This information is referred to as raw data.
+\subsection{Public Datasets}
+\subsection{Datasets available upon request}
+A first dataset available upon request is \textit{The Smart Insole Dataset} \cite{TheSmartInsoleDataset}. This dataset, available upon request, is comprised of raw data coming from a pair of pressure sensors insoles.
+The participants, 29 persons of different age groups and health conditions (healthy adults, elderly, Parkinson’s disease patients), performed two sets of tests. The first group is the control group, in which healthy adults aged between 20–59 years were included; the second group includes elderly citizens, in which people above the age of 60 years were included; the third group relates to Parkinson’s disease patients, irrespective of their age. 
+The data is acquired from \textit{Moticon SCIENCE} insole sensors, with a sampling rate of 100Hz. The total number of features is 50 (with 25 coming from the right foot and 25 coming from the left foot), plus a timestamp. The raw data is measured in: 
+\begin{itemize}
+    \item timestamp, in \(ms\);
+    \item pressure points (1 to 16) in \(N/cm^2\);
+    \item acceleration on the \(c, y, z\) axes in \(g\);
+    \item The angular rate \(\omega x, \omega y, \omega z\) in \(dps\);
+    \item The computed center of pressure in the \(x,y\) coordinates;
+    \item The total force \(N\).
+\end{itemize}
+
+The tests to measure gait information involved the Walking Straight and Turn test and a modified version of the Timed Up and Go test, which are made up of the following activities: for the Walking Straight and Turn test, participants were requested to walk in a straight route for 10m starting from a standing position. At the end of the 10m route, they turned 180° and returned to the starting position. The test was repeated two times and at three different walking speeds, slow, normal, and fast, as perceived by each participant; for the modified Timed Up and Go Test, participants were asked to rise from the chair, and immediately start walking straight for 10m. Then, after a turn of 180°, they were instructed to return to their chair, and sit down. As for the first test, this task was also repeated twice.
+
+The labeling of the recorded data was performed following a two-level annotation process. In the first level of annotation, data were described as activities of daily living (ADLs) that included 12 different labels (Tab \ref{tab:SmartInsoleADL}). The second level of annotation was focused on labeling the characteristic events of a gait cycle (Tab \ref{tab:SmartInsoleGait}), for both the right and left leg. 
+\input{tables/TheSmartInsoleDataset/SmartInsoleADLs}
+\input{tables/TheSmartInsoleDataset/SmartInsoleGait}
 
 \section{Challenges}
 %This part identifies gaps in the research field and challenges that remain unresolved. Addressing these gaps can justify the relevance of your own research and demonstrate how it contributes to advancing the discipline.
