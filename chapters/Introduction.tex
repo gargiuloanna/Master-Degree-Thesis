@@ -1,11 +1,18 @@
 %cap 1 descrizione generale del problema delle cadute e della prevenzione nell'ambito medico, ma non ingegneristico.
-
+\section{Introduction}
 The topic of this thesis revolves around the study of the \textit{prevention} of falls among adults and elderly. More specifically, the study is based on a wearable sensor platform, whose sensors give an insight on the the way the patient moves, to later estimate their risk of falling. 
 Although several research studies have been published regarding the \textit{detection} of falls using different methodologies, fall prevention remains an hot topic in the scientific community. The main difference between prevention and detection of falls is based on the idea that the first aims at identifying the risk of falling of a patient, whereas the latter aims at recognizing a fall that has already occurred.
 
-%descrivere il problema delle cadute\\
 With the ever growing scientific advances and the longer life expectancy, falls have become one of main causes of injury among the elderly. 
-Injuries include fractures, brain damage, mobility and independence loss, and even death. According to the Centers for Disease Control and Prevention (CDC), more than one in four older adults report a fall each year. Preventing a fall starts from identifying the risks associated with an increased chance of falling, and then focusing on the mitigation of the fore mentioned risks.
+Injuries include fractures, brain damage, mobility and independence loss, and even death. According to the Centers for Disease Control and Prevention (CDC), more than one in four older adults report a fall each year. 
+
+In patients affected by Parkinson's Disease, a common problem related to the risk of falls is the Freazing of Gait (FOG). In determining whether or not this parameter could be predicted, it has been demonstrated that utilizing EEG or EMG signals led to a more accurate prediction. 
+
+As stated by \cite{ImpactFallNurses}, falls not only impact the patients themselves, but also their surroundings. Psychological effects take place on nurses, who feel a higher level of stress and pressure when dealing with a patient who is at risk of falling. This results in scenarios in which a nurse would limit the mobility and individual freedom of the patient as to avoid the consequences of an involuntary fall. This leads to, as stated by the nurses, the loss of strength in the patients, who also have their privacy taken away: to avoid falls, nurses even accompany them in the bathroom, since a fall would get them in trouble and slow their work down. 
+In this scenario, a different approach to fall prevention is necessary.
+
+\section{Fall Risks}
+Preventing a fall starts from identifying the risks associated with an increased chance of falling, and then focusing on the mitigation of the fore mentioned risks.
 A study published in 2022 \cite{RiskFactors} compared all the causes that were thought to be relevant in the context of falls, and evaluated among those that increase the risk of falling in the elderly:
 \begin{description}
    \item[Older Age] Falls are the most common cause for trauma in older patients. Injuries at age above 65 lead to worse head injuries, in particular hemorrhage, compared to the younger counterpart\cite{geriatricTrauma}.
@@ -39,6 +46,7 @@ Instead, conditions that were not related to an increased risk of falling, since
   \item[Cognitive Impairment]
 \end{description}
 
+\section{Fall Risk and Balance Tests}
 To assess the risk of falling, literature agrees that it is useful to evaluate the movements of the patients using a variety of tests. The common denominator though, is that research shows that just one of these tests is not enough to determine if the elderly is at risk, but rather a combination of factors can be used to advance a conclusion.
 
 \textbf{Berg Balance Scale (BBS)}
@@ -76,15 +84,14 @@ The Tinetti Scale is a test comprised of different activities, developed for the
 \end{itemize}
 For the balance tests, the movements tested are:
 
-\input{tables/TinettiScale1}
-\input{tables/TinettiScale2}
-\input{tables/TinettiGait1}
-\input{tables/TinettiGait2}
+\input{tables/TinettiScale/TinettiScale1}
+\input{tables/TinettiScale/TinettiScale2}
+\input{tables/TinettiScale/TinettiGait1}
+\input{tables/TinettiScale/TinettiGait2}
 
 
 
-As stated by \cite{ImpactFallNurses}, falls not only impact the patients themselves, but also their surroundings. Psychological effects take place on nurses, who feel a higher level of stress and pressure when dealing with a patient who is at risk of falling. This results in scenarios in which a nurse would limit the mobility and individual freedom of the patient as to avoid the consequences of an involuntary fall. This leads to, as stated by the nurses, the loss of strength in the patients, who also have their privacy taken away: to avoid falls, nurses even accompany them in the bathroom, since a fall would get them in trouble and slow their work down. 
-In this scenario, a different approach to fall prevention is necessary.
+
 %risk factors
 
 %percentuali cadute\\
@@ -92,4 +99,3 @@ In this scenario, a different approach to fall prevention is necessary.
 %problemi associati\\
 
 %operazioni effettuate per contrastare le cadute\\
-In patients affected by Parkinson's Disease, a common problem related to the risk of falls is the Freazing of Gait (FOG). In determining whether or not this parameter could be predicted, it has been demonstrated that utilizing EEG or EMG signals led to a more accurate prediction. 
