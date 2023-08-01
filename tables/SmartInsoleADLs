@@ -1,0 +1,34 @@
+\vspace{0.5cm} 
+
+\begin{table} [htb!]
+    \centering
+    \begin{tabular}{|>{\centering}m{2.5cm} |>{\centering}m{2.5cm} |>{\centering}m{6.5cm} |}
+        \hline
+         \textbf{Label}   &  \textbf{Activity}   &  \textbf{Description}  \tabularnewline
+        \hline
+        STD	& Standing	& Standing with subtle movements \tabularnewline
+        \hline
+        STE	& Standing Eyes closed & Standing with eyes closed \tabularnewline
+        \hline
+        WAL &	Walking &	Normal walking \tabularnewline
+        \hline
+        WAS	& Walking Slow	& Walking in a slow rhythm \tabularnewline
+        \hline
+        WAF	& Walking Fast	& Walking in a fast rhythm \tabularnewline
+        \hline
+        SCH	&Sit on chair &	Sitting on a chair \tabularnewline
+        \hline
+        CHU	& Chair up&	Getting up from a chair \tabularnewline
+        \hline
+        SIT	& Sitting	& Sitting with subtle movements \tabularnewline
+        \hline
+        TUR	&Turning&	Turning 180 degrees at a normal speed at the end of the 10 m aisle \tabularnewline
+        \hline
+        TUS	& Turning Slow	& Turning 180 degrees at a slow speed at the end of the 10 m aisle \tabularnewline
+        \hline
+        TUF	& Turning Fast&	Turning 180 degrees at a fast speed at the end of the 10 m aisle \tabularnewline
+        \hline
+    \end{tabular} 
+    \caption{ADL labels of The Smart Insole Dataset}
+    \label{tab:SmartInsoleADL}
+\end{table}
