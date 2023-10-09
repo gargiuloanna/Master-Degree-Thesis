@@ -1,4 +1,4 @@
-from FeatureExtraction.utilities.utilities import get_windows
+from ..utilities.utilities import get_windows
 
 '''
 This function checks that every heel strike is associated to its toe off.

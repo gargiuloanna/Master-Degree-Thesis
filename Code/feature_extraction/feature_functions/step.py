@@ -1,4 +1,4 @@
-from FeatureExtraction.feature_functions.utilities import get_beginning_times
+from .utilities import get_beginning_times
 
 """Step Time, Length & Frequency
 
@@ -35,12 +35,11 @@ def compute_step_time(dn_complete, left_windows_heel, right_windows_heel):
 
 def compute_step_length(left_windows_heel, right_windows_heel):
 
-    left_steps_number = len(left_windows_heel)
-    left_step_length = 20 / left_steps_number
-    right_steps_number = len(right_windows_heel)
-    right_step_length = 20 / right_steps_number
+    steps_number = len(left_windows_heel) + len(right_windows_heel)
 
-    step_length = 20 / (right_steps_number + left_steps_number)
+    left_step_length = 20/len(left_windows_heel)
+    right_step_length = 20/len(right_windows_heel)
+    step_length = 20 / steps_number
 
     return step_length, left_step_length, right_step_length
 

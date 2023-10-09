@@ -1,17 +1,17 @@
 from sklearn.svm import LinearSVC, SVC
 import pandas as pd
 from sklearn.model_selection import train_test_split, GridSearchCV
-from preprocessing.scale import scale
-from evaluation.predict import predict_score
+from Code.preprocessing.scale import scale
+from Code.evaluation.predict import predict_score
 import os
-from plotting.plots import confusion_matrix
+from Code.plotting.plots import confusion_matrix
 from sklearn.inspection import DecisionBoundaryDisplay
 import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_training_data_with_decision_boundary(kernel):
     # Train the SVC
-    df = pd.read_excel('C:/Users/annin/PycharmProjects/Tesi/Data/Dataset -labels.xlsx')
+    df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset -labels.xlsx')
     df.drop(['Unnamed: 0', 'Patient', 'Exercise'], axis=1, inplace=True)
 
     data = df.iloc[:, 65:67]
@@ -60,25 +60,25 @@ def plot_training_data_with_decision_boundary(kernel):
     plt.show()
 
 if __name__ == "__main__":
-    name = "SVM-test20%-refit"
-    df = pd.read_excel('C:/Users/annin/PycharmProjects/Tesi/Data/Dataset -labels.xlsx')
+    name = "SVM-test30%10fold-gs"
+    df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-only normalized lengths.xlsx')
     df.drop(['Unnamed: 0', 'Patient', 'Exercise'], axis=1, inplace=True)
 
     data = df.iloc[:, :-1]
     labels = df.iloc[:, -1]
-    train, test, labeltrain, labeltest = train_test_split(data, labels, test_size=0.2, random_state=12345, stratify=labels)
-    print(test)
+    train, test, labeltrain, labeltest = train_test_split(data, labels, test_size=0.30, random_state=12345, stratify=labels)
     train, test = scale(train, test)
+
     print("[SVM] Searching best params with GridSearchCV")
     svm = SVC(random_state=0, class_weight='balanced')
     param_grid = {
         'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
-        'C': [0.1,0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.5, 2.0],
-        'degree': [1,2, 3, 5, 7],
-        'coef0': [0.0,1,2,3,4, 5, 6,7,8,9,10],
+        'C': [0.1,0.2, 0.3, 0.4, 0.5, 0.6, 0.65, 0.7,0.75, 0.8, 0.9, 1.0, 1.5, 2.0],
+        'degree': [1,2, 3, 5, 7, 8, 9, 10],
+        'coef0': [0.0,1,2,3,4,4.5, 4.6, 4.7, 4.8, 4.9, 5,5.5, 5.6, 5.7, 5.8, 6,7,8,9,10],
         'decision_function_shape':['ovo'],
     }
-    svm_gridcv = GridSearchCV(svm, param_grid=param_grid, cv=5, scoring='balanced_accuracy', error_score=0, n_jobs=-1, verbose=3, refit=True)
+    svm_gridcv = GridSearchCV(svm, param_grid=param_grid, cv=10, scoring='balanced_accuracy', error_score=0, n_jobs=-1, verbose=3, refit=True)
     svm_gridcv.fit(train, labeltrain)
     print(f"[SVM] Best SVM model with params: {svm_gridcv.best_params_} and score: {svm_gridcv.best_score_:.3f}")
     print("Test Accuracy: ", predict_score(svm_gridcv.best_estimator_, test, labeltest))
@@ -99,5 +99,10 @@ if __name__ == "__main__":
     for ind in misclassified[0]:
         print(ind)
 
-    #os.mkdir("C:/Users/annin/PycharmProjects/Tesi/Data/Plots/" + name)
+    if not os.path.exists("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Plots/" + name):
+        os.mkdir("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Plots/" + name)
     confusion_matrix(svm_gridcv.best_estimator_, test, labeltest, name=name)
+    plt.close()
+
+    #[SVM] Best SVM model with params: {'C': 0.7, 'coef0': 4.9, 'decision_function_shape': 'ovo', 'degree': 3, 'kernel': 'poly'} and score: 0.841
+    #Test Accuracy:  0.7984297661717017

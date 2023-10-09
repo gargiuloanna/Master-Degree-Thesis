@@ -1,5 +1,5 @@
 import math
-from const import g
+from Code.const import g
 
 
 class DimensionlessEquations:

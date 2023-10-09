@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
-from FeatureExtraction.utilities.utilities import get_windows
-from FeatureExtraction.feature_functions.utilities import get_hes_toes, check_length_difference
-from FeatureExtraction.feature_functions.stride import compute_stride_length, compute_stride_velocity, compute_stride_time, compute_gait_variability
-from FeatureExtraction.feature_functions.step import compute_step_frequency, compute_step_length, compute_step_time
-from FeatureExtraction.feature_functions.stance import compute_stance_time, compute_stance_phase
-from FeatureExtraction.feature_functions.single_support import compute_single_support_time, compute_single_support_phase
-from FeatureExtraction.feature_functions.double_support import compute_double_support_time, compute_double_support_phase
-from FeatureExtraction.feature_functions.swing import compute_swing_phase, compute_swing_time
-from FeatureExtraction.feature_functions.walk_ratio import compute_walk_ratio
-from FeatureExtraction.feature_functions.R_Index import single_pressure_ratio, double_pressure_ratio
-from FeatureExtraction.feature_functions.gait_speed import compute_gait_speed
-from FeatureExtraction.feature_functions.approximate_entropy import approximate_entropy
+from Code.feature_extraction.feature_functions.utilities import get_hes_toes, check_length_difference
+from Code.feature_extraction.feature_functions.stride import compute_stride_length, compute_stride_velocity, compute_stride_time, compute_gait_variability
+from Code.feature_extraction.feature_functions.step import compute_step_frequency, compute_step_length, compute_step_time
+from Code.feature_extraction.feature_functions.stance import compute_stance_time, compute_stance_phase
+from Code.feature_extraction.feature_functions.single_support import compute_single_support_time, compute_single_support_phase
+from Code.feature_extraction.feature_functions.double_support import compute_double_support_time, compute_double_support_phase
+from Code.feature_extraction.feature_functions.swing import compute_swing_phase, compute_swing_time
+from Code.feature_extraction.feature_functions.walk_ratio import compute_walk_ratio
+from Code.feature_extraction.feature_functions.R_Index import single_pressure_ratio, double_pressure_ratio
+from Code.feature_extraction.feature_functions.gait_speed import compute_gait_speed
+from Code.feature_extraction.feature_functions.approximate_entropy import approximate_entropy
+
 from scipy.stats import kurtosis
 from scipy.stats import skew
 
@@ -34,6 +34,7 @@ def features(dn_complete, name):
     # Step Time, Length, Frequency
     step_time = compute_step_time(dn_complete, left_windows_heel, right_windows_heel)
     step_length, left_step_length, right_step_length = compute_step_length(left_windows_heel, right_windows_heel)
+    #step_length = compute_step_length(left_windows_heel, right_windows_heel)
     step_frequency, left_step_frequency, right_step_frequency = compute_step_frequency(dn_complete, left_windows_heel, right_windows_heel)
 
     # Stance Time, Phase
@@ -181,7 +182,7 @@ def features(dn_complete, name):
     # Feature insert
 
     features = pd.DataFrame()
-    old_features = pd.read_excel('C:/Users/annin/PycharmProjects/Tesi/fixed/' +  name)
+    old_features = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/fixed/' +  name)
 
     features.loc[0, 'Patient'] = patient
     features.loc[0, 'Exercise'] = task
@@ -363,7 +364,7 @@ def features(dn_complete, name):
     '''
 
     feat = features.copy()
-    feat.to_excel('C:/Users/annin/PycharmProjects/Tesi/Data/features/' + name)
+    feat.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/' + name)
 
 
 """Execute"""
@@ -373,14 +374,14 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Tesi/Data/gaitphases/'):
+for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/gaitphases/'):
     if len(files) != 0:
         folder = root
         for file in files:
             patient = file.split("_")[0]
             task = file.split("_")[1].split(".")[0]
             name = patient + ' - ' + task + '.xlsx'
-            if not os.path.exists(os.path.join('C:/Users/annin/PycharmProjects/Tesi/Data/features/', name)):
+            if not os.path.exists(os.path.join('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/', name)):
                 print("Examining ", folder, file)
                 dn_complete = pd.read_excel(folder + '/' + file)
 

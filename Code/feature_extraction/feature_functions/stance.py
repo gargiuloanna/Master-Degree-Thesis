@@ -1,5 +1,5 @@
 import numpy as np
-from FeatureExtraction.feature_functions.utilities import get_beginning_times, get_ending_times
+from .utilities import get_beginning_times, get_ending_times
 
 """
 Stance Time
@@ -31,6 +31,7 @@ def compute_stance_time(dn_complete, left_windows_heel, right_windows_heel, left
 
     left_stance_times = []
     right_stance_times = []
+
     for idx in range(0, min(len(left_toe_ending_times_stance), len(left_stride_times))):
         left_stance_times.append(left_stride_times[idx])
         left_stance_times.append(left_toe_ending_times_stance[idx])

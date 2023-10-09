@@ -1,31 +1,39 @@
 import matplotlib.pyplot as plt
-from utilities import get_mean, get_max_min, get_signal
-from FeatureExtraction.gaitphases import get_last_stance, get_initial_stance, remove_stance
+from Code.feature_extraction.utilities.utilities import get_signal, get_mean, get_max_min, get_last_stance, get_initial_stance, remove_stance
 '''
 The functions are used to plot the gait phases of each leg computed by the algorithm and compared to the labels
 available in the dataset.
 '''
 def plots(signal, dc_signal, dn_complete, dc_complete, hes, tof, fof, her, peaks, mins, hes_dc, tof_dc, fof_dc, her_dc, mean, file, side = 'left'):
-  fig, (ax1, ax2) = plt.subplots(2, 1, figsize = (32,12))
+  fig, (ax1, ax2) = plt.subplots(2, 1, figsize = (30,16))
+
+  plt.suptitle("Gait Phases Visualization on the (Heel-Toe) Pressure Signal", fontweight="bold",  fontsize=16)
+
+  ax1.set_title("Gait Phases found by the algorithm")
   ax1.plot(dn_complete['# time'],signal , label = 'Signal', color = 'r')
-  ax1.plot(dn_complete['# time'][hes],signal[hes], 'o', label = 'Heel Strike', color = 'm')
-  ax1.plot(dn_complete['# time'][tof],signal[tof], 'o', label = 'Toe Off', color = 'g')
-  ax1.plot(dn_complete['# time'][fof], signal[fof], 'o', label = 'Foot Flat', color = 'y')
-  ax1.plot(dn_complete['# time'][her],signal[her], 'o', label = 'Heel Rise', color = 'b')
-  ax1.plot(dn_complete['# time'][peaks],signal[peaks] ,"^", label = 'peaks', color = 'r')
-  ax1.plot(dn_complete['# time'][mins],signal[mins] , "v", label = 'mins', color = 'r')
-  ax1.axhline(y=0)
-  ax1.axhline(y=mean)
+  ax1.plot(dn_complete['# time'][hes],signal[hes], 'o', label = 'Heel Strike', color = 'm', markersize = 4)
+  ax1.plot(dn_complete['# time'][tof],signal[tof], 'o', label = 'Toe Off', color = 'g', markersize = 4)
+  ax1.plot(dn_complete['# time'][fof], signal[fof], 'o', label = 'Foot Flat', color = 'y', markersize = 4)
+  ax1.plot(dn_complete['# time'][her],signal[her], 'o', label = 'Heel Rise', color = 'b', markersize = 4)
+  #ax1.plot(dn_complete['# time'][peaks],signal[peaks] ,"^", label = 'peaks', color = 'r')
+  #ax1.plot(dn_complete['# time'][mins],signal[mins] , "v", label = 'mins', color = 'r')
+  #ax1.axhline(y=0)
+  #ax1.axhline(y=mean)
+  ax1.set_xlabel("Time (s)")
+  ax1.set_ylabel("Signal")
   ax1.legend()
 
+  ax2.set_title("Gait Phases as found in the dataset")
   ax2.plot(dc_complete['# time'],dc_signal , label = 'Signal - Dataset', color = 'r')
-  ax2.plot(dc_complete['# time'][hes_dc],dc_signal[hes_dc], 'o', label = 'Heel Strike - Dataset', color = 'm')
-  ax2.plot(dc_complete['# time'][tof_dc],dc_signal[tof_dc], 'o', label = 'Toe Off - Dataset', color = 'g')
-  ax2.plot(dc_complete['# time'][fof_dc], dc_signal[fof_dc], 'o', label = 'Foot Flat - Dataset', color = 'y')
-  ax2.plot(dc_complete['# time'][her_dc],dc_signal[her_dc], 'o', label = 'Heel Rise - Dataset', color = 'b')
+  ax2.plot(dc_complete['# time'][hes_dc],dc_signal[hes_dc], 'o', label = 'Heel Strike - Dataset', color = 'm', markersize = 4)
+  ax2.plot(dc_complete['# time'][tof_dc],dc_signal[tof_dc], 'o', label = 'Toe Off - Dataset', color = 'g', markersize = 4)
+  ax2.plot(dc_complete['# time'][fof_dc], dc_signal[fof_dc], 'o', label = 'Foot Flat - Dataset', color = 'y', markersize = 4)
+  ax2.plot(dc_complete['# time'][her_dc],dc_signal[her_dc], 'o', label = 'Heel Rise - Dataset', color = 'b', markersize = 4)
+  ax2.set_xlabel("Time (s)")
+  ax2.set_ylabel("Signal")
   ax2.legend()
 
-  fig.savefig("/content/drive/MyDrive/Tesi/plots/" + file.split(".")[0] +  ' - '+ side + '.png')
+  fig.savefig("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/gaitphasesplots/" + file.split(".")[0] +  ' - '+ side + '.png')
   plt.close()
 
 def visualization(dn_complete, dc_complete, file):
@@ -57,7 +65,7 @@ def visualization(dn_complete, dc_complete, file):
   left_signal = get_signal(dn_complete)
   right_signal = get_signal(dn_complete, side = 'right')
   left_dc_signal = get_signal(dc_complete)
-  right_dc_signal = get_signal(dc_complete)
+  right_dc_signal = get_signal(dc_complete, side = 'right')
 
   left_peaks, left_mins = get_max_min(left_signal)
   initial_stance_left, initial_stance_index_left = get_initial_stance(dn_complete, 'left')

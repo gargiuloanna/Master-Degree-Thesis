@@ -1,9 +1,9 @@
 from joblib import load
-from evaluation.predict import predict_score
+from ..evaluation.predict import predict_score
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
-from preprocessing.scale import scale
+from ..preprocessing.scale import scale
 
 if __name__ == '__main__':
     for root, dirs, files in os.walk("./Models"):
@@ -12,7 +12,7 @@ if __name__ == '__main__':
                 md = load(os.path.join("./Models", model))
                 print("Loaded ", md)
 
-                df = pd.read_excel('C:/Users/annin/PycharmProjects/Tesi/Data/Dataset -labels.xlsx')
+                df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset -labels.xlsx')
                 df.drop(['Unnamed: 0', 'Patient', 'Exercise'], axis=1, inplace=True)
 
                 data = df.iloc[:, :-1]

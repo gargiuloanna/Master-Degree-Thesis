@@ -1,6 +1,5 @@
-from FeatureExtraction.feature_functions.utilities import get_beginning_times, get_ending_times
+from .utilities import get_beginning_times, get_ending_times
 import numpy as np
-
 """
 Double Support
 
@@ -27,9 +26,10 @@ def compute_double_support_time(dn_complete, left_windows_heel, right_windows_he
     toe_times = left_ending_toe + right_ending_toe
     toe_times.sort()
 
-    for j in range(0, int(min(len(toe_times), len(stride_times)) / 2)):
-        double_support_times.append(toe_times[j])
+    for j in range(1, int(min(len(toe_times), len(stride_times)) / 2)):
         double_support_times.append(stride_times[j])
+        double_support_times.append(toe_times[j])
+
     '''
     if left_windows_heel[0][0] < right_windows_heel[0][0]:
         for j in range(0, int(min(len(right_ending_toe), len(left_stride_times)) / 2)):
@@ -38,7 +38,7 @@ def compute_double_support_time(dn_complete, left_windows_heel, right_windows_he
         for j in range(0, int(min(len(left_ending_toe), len(right_stride_times)) / 2)):
             double_support_times.append(right_ending_toe[j] - left_stride_times[j])
     '''
-    db_support_time = abs(np.diff(double_support_times).mean())
+    db_support_time = abs(np.diff(double_support_times)).mean()
 
     return db_support_time
 

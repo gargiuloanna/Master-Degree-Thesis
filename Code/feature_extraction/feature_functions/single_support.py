@@ -1,4 +1,4 @@
-from FeatureExtraction.feature_functions.utilities import get_beginning_times, get_ending_times
+from .utilities import get_beginning_times, get_ending_times
 import numpy as np
 
 """

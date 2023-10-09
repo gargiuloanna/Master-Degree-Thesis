@@ -2,3 +2,403 @@ Train Accuracy: 0.8300757575757576
 Test Accuracy: 0.7619047619047619
 Train Accuracy: 0.8531313131313132
 Test Accuracy: 0.7619047619047619
+Model RandomForestDifferentDatasets25%5fold - Dataset -features_changed.xlsx
+Train Accuracy: 0.7207122605529411
+Test Accuracy: 0.747037037037037
+Model RandomForestDifferentDatasets25%5fold - Dataset -features_changed - lr.xlsx
+Train Accuracy: 0.7786616870313602
+Test Accuracy: 0.8390740740740741
+Model RandomForestDifferentDatasets25%5fold - Dataset -features_changed - mean.xlsx
+Train Accuracy: 0.737676841817423
+Test Accuracy: 0.8124074074074074
+Model RandomForestDifferentDatasets25%5fold - Dataset -features_changed - mean.xlsx
+Train Accuracy: 0.737676841817423
+Test Accuracy: 0.8124074074074074
+Model RandomForestDifferentDatasets25%5fold - Dataset-normalized lengths.xlsx
+Train Accuracy: 0.7384540103334629
+Test Accuracy: 0.8257407407407408
+Model RandomForestDifferentDatasets25%5fold - Dataset-normalized lengths - lr.xlsx
+Train Accuracy: 0.7973533094425975
+Test Accuracy: 0.7974074074074075
+Model RandomForestDifferentDatasets25%5fold - Dataset-normalized lengths - mean.xlsx
+Train Accuracy: 0.7546306290747378
+Test Accuracy: 0.8124074074074074
+Model RandomForestDifferentDatasets25%5fold - Dataset-only normalized lengths.xlsx
+Train Accuracy: 0.8019371644862772
+Test Accuracy: 0.8257407407407408
+Model RandomForestDifferentDatasets25%5fold - Dataset-only normalized lengths -lr.xlsx
+Train Accuracy: 0.7170926701495329
+Test Accuracy: 0.8257407407407408
+Model RandomForestDifferentDatasets25%5fold - Dataset-only normalized lengths - mean.xlsx
+Train Accuracy: 0.6880963688959888
+Test Accuracy: 0.8257407407407408
+################################################10 FOLD##########################################
+Model RandomForestDifferentDatasets30%10fold - Dataset -features_changed.xlsx
+Train OBB Accuracy: 0.7452813852813853
+Test Accuracy: 0.8672128349547704
+Model RandomForestDifferentDatasets30%10fold - Dataset -features_changed.xlsx
+Train OBB Accuracy: 0.7452813852813853
+Test Accuracy: 0.8672128349547704
+Model RandomForestDifferentDatasets30%10fold - Dataset -features_changed - lr.xlsx
+Train OOB Accuracy: 0.7785281385281385
+Test Accuracy: 0.8569721795528248
+Model RandomForestDifferentDatasets30%10fold - Dataset -features_changed - mean.xlsx
+Train OOB Accuracy: 0.655064935064935
+Test Accuracy: 0.7876770779996587
+Model RandomForestDifferentDatasets30%10fold - Dataset-normalized lengths.xlsx
+Train OOB Accuracy: 0.7070995670995671
+Test Accuracy: 0.8354668032087388
+Model RandomForestDifferentDatasets30%10fold - Dataset-normalized lengths - lr.xlsx
+Train OOB Accuracy: 0.8070129870129871
+Test Accuracy: 0.8569721795528248
+Model RandomForestDifferentDatasets30%10fold - Dataset-normalized lengths - mean.xlsx
+Train OOB Accuracy: 0.7425108225108225
+Test Accuracy: 0.8250554702167605
+Model RandomForestDifferentDatasets30%10fold - Dataset-only normalized lengths.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model RandomForestDifferentDatasets30%10fold - Dataset-only normalized lengths -lr.xlsx
+Train OOB Accuracy: 0.8212987012987013
+Test Accuracy: 0.8303464755077657
+Model RandomForestDifferentDatasets30%10fold - Dataset-only normalized lengths - mean.xlsx
+Train OOB Accuracy: 0.7217316017316017
+Test Accuracy: 0.7455197132616487
+Model RandomForestDifferentDatasets30%10fold - Dataset-only normalized lengths.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.01.xlsx
+Train OOB Accuracy: 0.8145454545454546
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.02.xlsx
+Train OOB Accuracy: 0.809004329004329
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.01.xlsx
+Train OOB Accuracy: 0.8145454545454546
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.02.xlsx
+Train OOB Accuracy: 0.809004329004329
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.03.xlsx
+Train OOB Accuracy: 0.7994805194805195
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.04.xlsx
+Train OOB Accuracy: 0.8003463203463204
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.05.xlsx
+Train OOB Accuracy: 0.8193073593073593
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.06.xlsx
+Train OOB Accuracy: 0.768051948051948
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.07.xlsx
+Train OOB Accuracy: 0.8116017316017317
+Test Accuracy: 0.8564601467827274
+Model Randomforest Dataset-only normalized lengths_0.08.xlsx
+Train OOB Accuracy: 0.7946320346320347
+Test Accuracy: 0.8037207714627069
+Model Randomforest Dataset-only normalized lengths_0.09.xlsx
+Train OOB Accuracy: 0.8164502164502164
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.1.xlsx
+Train OOB Accuracy: 0.7916883116883117
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.11.xlsx
+Train OOB Accuracy: 0.8278787878787878
+Test Accuracy: 0.8195937873357227
+Model Randomforest Dataset-only normalized lengths_0.12.xlsx
+Train OOB Accuracy: 0.8278787878787878
+Test Accuracy: 0.8195937873357227
+Model Randomforest Dataset-only normalized lengths_0.13.xlsx
+Train OOB Accuracy: 0.8002597402597402
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.14.xlsx
+Train OOB Accuracy: 0.8002597402597402
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.15.xlsx
+Train OOB Accuracy: 0.8002597402597402
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.16.xlsx
+Train OOB Accuracy: 0.8002597402597402
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.17.xlsx
+Train OOB Accuracy: 0.8002597402597402
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.18.xlsx
+Train OOB Accuracy: 0.807878787878788
+Test Accuracy: 0.8195937873357227
+Model Randomforest Dataset-only normalized lengths_0.19.xlsx
+Train OOB Accuracy: 0.8109090909090909
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.2.xlsx
+Train OOB Accuracy: 0.8109090909090909
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.21.xlsx
+Train OOB Accuracy: 0.8109090909090909
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.22.xlsx
+Train OOB Accuracy: 0.8109090909090909
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.23.xlsx
+Train OOB Accuracy: 0.8109090909090909
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.24.xlsx
+Train OOB Accuracy: 0.8109090909090909
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.25.xlsx
+Train OOB Accuracy: 0.7890043290043289
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.26.xlsx
+Train OOB Accuracy: 0.7633766233766234
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.27.xlsx
+Train OOB Accuracy: 0.8222510822510823
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.28.xlsx
+Train OOB Accuracy: 0.8222510822510823
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.29.xlsx
+Train OOB Accuracy: 0.8068398268398269
+Test Accuracy: 0.787847755589691
+Model Randomforest Dataset-only normalized lengths_0.3.xlsx
+Train OOB Accuracy: 0.8068398268398269
+Test Accuracy: 0.787847755589691
+Model Randomforest Dataset-only normalized lengths_0.31.xlsx
+Train OOB Accuracy: 0.8068398268398269
+Test Accuracy: 0.787847755589691
+Model Randomforest Dataset-only normalized lengths_0.32.xlsx
+Train OOB Accuracy: 0.8068398268398269
+Test Accuracy: 0.787847755589691
+Model Randomforest Dataset-only normalized lengths_0.33.xlsx
+Train OOB Accuracy: 0.8012987012987013
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.34.xlsx
+Train OOB Accuracy: 0.8230303030303031
+Test Accuracy: 0.7825567502986858
+Model Randomforest Dataset-only normalized lengths_0.35000000000000003.xlsx
+Train OOB Accuracy: 0.8230303030303031
+Test Accuracy: 0.7825567502986858
+Model Randomforest Dataset-only normalized lengths_0.36.xlsx
+Train OOB Accuracy: 0.8230303030303031
+Test Accuracy: 0.7825567502986858
+Model Randomforest Dataset-only normalized lengths_0.37.xlsx
+Train OOB Accuracy: 0.8230303030303031
+Test Accuracy: 0.7825567502986858
+Model Randomforest Dataset-only normalized lengths_0.38.xlsx
+Train OOB Accuracy: 0.8230303030303031
+Test Accuracy: 0.7825567502986858
+Model Randomforest Dataset-only normalized lengths_0.39.xlsx
+Train OOB Accuracy: 0.8098701298701299
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.4.xlsx
+Train OOB Accuracy: 0.8098701298701299
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.41000000000000003.xlsx
+Train OOB Accuracy: 0.8098701298701299
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.42.xlsx
+Train OOB Accuracy: 0.8155844155844155
+Test Accuracy: 0.8513398190817546
+Model Randomforest Dataset-only normalized lengths_0.43.xlsx
+Train OOB Accuracy: 0.8031168831168832
+Test Accuracy: 0.8195937873357227
+Model Randomforest Dataset-only normalized lengths_0.44.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.45.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.46.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.47000000000000003.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.48.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.49.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.5.xlsx
+Train OOB Accuracy: 0.8268398268398268
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.51.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.52.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.53.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.54.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.55.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.56.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.5700000000000001.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.58.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.59.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.6.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.61.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.62.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.63.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.64.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.65.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.66.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.67.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.68.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.6900000000000001.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.7000000000000001.xlsx
+Train OOB Accuracy: 0.7907359307359307
+Test Accuracy: 0.8405871309097116
+Model Randomforest Dataset-only normalized lengths_0.71.xlsx
+Train OOB Accuracy: 0.7669264069264069
+Test Accuracy: 0.7613927291346646
+Model Randomforest Dataset-only normalized lengths_0.72.xlsx
+Train OOB Accuracy: 0.7775757575757575
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.73.xlsx
+Train OOB Accuracy: 0.7775757575757575
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.74.xlsx
+Train OOB Accuracy: 0.7775757575757575
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.75.xlsx
+Train OOB Accuracy: 0.8344588744588745
+Test Accuracy: 0.8462194913807818
+Model Randomforest Dataset-only normalized lengths_0.76.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.77.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.78.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.79.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.8.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.81.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.8200000000000001.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.8300000000000001.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.84.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.85.xlsx
+Train OOB Accuracy: 0.8146320346320346
+Test Accuracy: 0.7984297661717017
+Model Randomforest Dataset-only normalized lengths_0.86.xlsx
+Train OOB Accuracy: 0.7984415584415584
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.87.xlsx
+Train OOB Accuracy: 0.7984415584415584
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.88.xlsx
+Train OOB Accuracy: 0.7984415584415584
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.89.xlsx
+Train OOB Accuracy: 0.7984415584415584
+Test Accuracy: 0.8354668032087388
+Model Randomforest Dataset-only normalized lengths_0.9.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.91.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.92.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.93.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.9400000000000001.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.9500000000000001.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.96.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.97.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.98.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.99.xlsx
+Train OOB Accuracy: 0.7956709956709956
+Test Accuracy: 0.8620925072537976
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model Randomforest Dataset-only normalized lengths_0.0.xlsx
+Train OOB Accuracy: 0.8174025974025975
+Test Accuracy: 0.8569721795528248
+Model SVM-test30%10fold
+Train Accuracy: 0.8412698412698413
+Test Accuracy: 0.7984297661717017
+Model SVM-test30%10fold-gs
+Train Accuracy: 0.8412698412698413
+Test Accuracy: 0.7984297661717017

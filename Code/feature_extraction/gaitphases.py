@@ -1,71 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import pandas as pd
-from utilities.preprocessing import clean_data, impute, compute_average, scale
-from utilities.utilities import get_signal, get_windows, get_mean, get_max_min
-from utilities.plotting import visualization
-
-'''
-Computes the initial stance time of the patient looking at the angular acceleration along the X axis.
-It calculates the mean and standard deviation of the signal to determine a threshold to use to define the end
-of the stance phase.
-'''
-def get_initial_stance(dn_complete, side = 'left'):
-  plus_stance = dn_complete[side + ' angular X[dps]'].mean() + dn_complete[side + ' angular X[dps]'].std()
-  minus_stance = dn_complete[side + ' angular X[dps]'].mean() - dn_complete[side + ' angular X[dps]'].std()
-  previous = True
-  stance_time = 0.00
-  stance_index = 0
-  for elem in range(len(dn_complete)):
-    if (dn_complete.iloc[elem][side + ' angular X[dps]'] < plus_stance and dn_complete.iloc[elem][side + ' angular X[dps]'] > minus_stance) and previous == True:
-      stance_time = dn_complete.iloc[elem]['# time']
-      stance_index = elem
-    else:
-      previous = False
-  return stance_time, stance_index
-
-'''
-Computes the final stance time of the patient looking at the angular acceleration along the X axis.
-It calculates the mean and standard deviation of the signal to determine a threshold to use to define the end
-of the stance phase.
-'''
-def get_last_stance(dn_complete, side = 'left'):
-  plus_stance = dn_complete[side + ' angular X[dps]'].mean() + dn_complete[side + ' angular X[dps]'].std()
-  minus_stance = dn_complete[side + ' angular X[dps]'].mean() - dn_complete[side + ' angular X[dps]'].std()
-  stance_time = dn_complete.loc[len(dn_complete)- 1, '# time']
-  stance_index = len(dn_complete)- 1
-  last = True
-  for elem in range(len(dn_complete)-1, 0, -1):
-    if (dn_complete.iloc[elem][side + ' angular X[dps]'] < plus_stance and dn_complete.iloc[elem][side + ' angular X[dps]'] > minus_stance) and last == True:
-      stance_time = dn_complete.iloc[elem]['# time']
-      stance_index = elem
-    else:
-      last = False
-  return stance_time, stance_index
-
-'''
-It removes from the signal the values that would be computed to determine the gait phases during stance time,
-since the insoles still register a pressure as the patient is standing, but this pressure shall not be used
-to determine walking gait phases.
-'''
-def remove_stance(peaks, mins, initial_stance_index, last_stance_index):
-
-  #remove elements in the stance phase
-  mask = peaks >= initial_stance_index
-  peaks = peaks[mask]
-
-  mask = mins >= initial_stance_index
-  mins = mins[mask]
-
-
-  mask = peaks <= last_stance_index
-  peaks = peaks[mask]
-
-  mask = mins <= last_stance_index
-  mins = mins[mask]
-
-  return peaks, mins
-
+from Code.feature_extraction.utilities.preprocessing import clean_data, impute, compute_average, scale
+from Code.feature_extraction.utilities.utilities import get_signal, get_windows, get_mean, get_max_min, get_last_stance, get_initial_stance, remove_stance
+from Code.feature_extraction.utilities.plotting import visualization
 
 '''
 Computes the gait phases associated to the signal.
@@ -193,10 +131,10 @@ def gait_phases(signal, dn_complete, side = "Left"):
 
 if __name__ == '__main__':
 
-  for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Tesi/Data/SmartInsole/'):
+  for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/SmartInsole/'):
     for file in files:
       print("Preprocessing file ", file)
-      if not os.path.exists('C:/Users/annin/PycharmProjects/Tesi/Data/gaitphases/' + file):
+      if not os.path.exists('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/gaitphasesplots/' + file.split(".")[0] + " - left.png") and not file== "s006_1slow1.xlsx" and not file == "s013_2tug1.xlsx" and not file == "s013_2tug2.xlsx":
         dc_complete = pd.read_excel(root + '/' + file)
         dn_complete = pd.read_excel(root + '/' + file)
 
@@ -217,7 +155,7 @@ if __name__ == '__main__':
         visualization(dn_complete, dc_complete, file)
 
         print("Saving")
-        dn_complete.to_excel('C:/Users/annin/PycharmProjects/Tesi/Data/gaitphases/' +  file)
+        #dn_complete.to_excel('C:/Users/annin/PycharmProjects/Tesi/Data/gaitphases/' +  file)
       else:
         print("Already done ", file)
 
