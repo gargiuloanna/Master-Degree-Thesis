@@ -1,6 +1,7 @@
 import math
-from Code.const import g
 
+#gravity
+g = 9.80665
 
 class DimensionlessEquations:
 
@@ -17,6 +18,8 @@ class DimensionlessEquations:
     def gait_time(self,time_raw, height):
         gait = time_raw / math.sqrt(height/g)
         return gait
+
+
 
 
 

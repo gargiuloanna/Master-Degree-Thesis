@@ -1,4 +1,4 @@
-from height_normalization import DimensionlessEquations
+from dimensionless_equations import DimensionlessEquations
 import pandas as pd
 
 def normalize(data, mean = True, sides = True):
