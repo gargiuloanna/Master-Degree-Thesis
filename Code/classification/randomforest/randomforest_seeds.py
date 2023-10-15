@@ -38,12 +38,12 @@ if __name__ == '__main__':
         print("Training OOB Accuracy ", oob)
         print("Test Accuracy: ", test_score)
 
-        rdf = dump(clf, "C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/models/" + name + ".joblib")
+        rdf = dump(clf, "C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/models/randomforest/" + name + ".joblib")
         print("[RANDOM FOREST] Model Saved")
 
         print(classification_report(labeltest, clf.predict(test),  target_names=['Elderly', 'Parkinson', 'Adults'],  digits=3, output_dict=False, zero_division='warn'))
 
-        file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/classification/randomforestseeds.txt", "a")
+        file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/logs/randomforest/randomforestseeds.txt", "a")
         file.write("\nModel " + name + '\n')
         file.write("Train Accuracy: " + str(predict_score(clf, train, labeltrain)) + '\n')
         file.write("Train OOB Accuracy: " + str(clf.oob_score_) + '\n')

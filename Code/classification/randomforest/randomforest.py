@@ -1,11 +1,10 @@
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report,balanced_accuracy_score
 from Code.evaluation.predict import predict_score
-from joblib import dump
 from Code.plotting.plots import confusion_matrix, random_forest_fimp, permutation_imp, feature_importance
-from  sklearn.metrics import balanced_accuracy_score
-import numpy as np
 from Code.preprocessing.preprocess import preprocess
-from sklearn.metrics import classification_report
+import numpy as np
+from joblib import dump
 
 
 if __name__ == '__main__':
@@ -13,7 +12,7 @@ if __name__ == '__main__':
     train, test, labeltrain, labeltest = preprocess()
 
     seed = 5436398
-    name = "RandomforestWholePreprocess "+str(seed)
+    name = "randomforest/RandomforestWholePreprocess "+str(seed)
 
     clf = RandomForestClassifier(criterion='entropy', max_depth=8, max_features='sqrt', min_samples_split=10,
                                  min_samples_leaf=1, n_estimators=100, random_state=5436398, oob_score=balanced_accuracy_score,
@@ -27,13 +26,13 @@ if __name__ == '__main__':
     print("Test Accuracy: ", predict_score(clf, test, labeltest))
 
     #Save Model
-    rdf = dump(clf, "C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/models/" + name + ".joblib")
+    rdf = dump(clf, "C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/models/randomforest/" + name + ".joblib")
     print("[RANDOM FOREST] Model Saved")
 
     print(classification_report(labeltest, clf.predict(test),  target_names=['Elderly', 'Parkinson', 'Adults'],  digits=3, output_dict=False, zero_division='warn'))
 
     # Write to File
-    file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/classification/randomforest.txt", "a")
+    file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/logs/randomforest/randomforest.txt", "a")
     file.write("\nModel " + name + '\n')
     file.write("Train Accuracy: " + str(predict_score(clf, train, labeltrain)) + '\n')
     file.write("Train OOB Accuracy: " + str(clf.oob_score_) + '\n')

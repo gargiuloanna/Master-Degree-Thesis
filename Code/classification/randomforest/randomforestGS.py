@@ -1,11 +1,9 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
-from Code.evaluation.predict import predict_score
-from joblib import dump
-from Code.plotting.plots import confusion_matrix, random_forest_fimp, permutation_imp, feature_importance
 from  sklearn.metrics import balanced_accuracy_score
-import os
+from Code.evaluation.predict import predict_score
 from Code.preprocessing.preprocess import preprocess
+from joblib import dump
 
 if __name__ == '__main__':
 
@@ -39,10 +37,11 @@ if __name__ == '__main__':
         print("Training OOB Accuracy ", clf.oob_score_)
         print("Test Accuracy: ", predict_score(rdf_gridcv.best_estimator_, test, labeltest))
 
-        rdf = dump(rdf_gridcv.best_estimator_, "C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/models/" + name + ".joblib")
+        rdf = dump(rdf_gridcv.best_estimator_, "C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/models/randomforest/" + name + ".joblib")
         print("[RANDOM FOREST] Model Saved")
 
-        file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/classification/performances.txt", "a")
+        file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/logs/randomforest/randomforestgridsearch.txt", "a")
+        file.write(f"[RANDOM FOREST] Best random forest with params: {rdf_gridcv.best_params_} and score {rdf_gridcv.best_score_}")
         file.write("\nModel " + name + '\n')
         file.write("Train OOB Accuracy: " + str(clf.oob_score_) + '\n')
         file.write("Test Accuracy: " + str(predict_score(clf, test, labeltest)) + '\n')

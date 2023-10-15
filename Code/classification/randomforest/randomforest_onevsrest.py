@@ -18,6 +18,6 @@ if __name__ == '__main__':
     print("Test Accuracy ", ovr.score(test, labeltest))
 
     #Plots
-    feature_importance(ovr.estimators_[0], train.columns,name = "ONEVSREST_0")
-    feature_importance(ovr.estimators_[1], train.columns,name = "ONEVSREST_1")
-    feature_importance(ovr.estimators_[2], train.columns,name = "ONEVSREST_2")
+    feature_importance(ovr.estimators_[0], train.columns,name = "randomforest/ONEVSREST_0")
+    feature_importance(ovr.estimators_[1], train.columns,name = "randomforest/ONEVSREST_1")
+    feature_importance(ovr.estimators_[2], train.columns,name = "randomforest/ONEVSREST_2")
