@@ -13,7 +13,7 @@ def check_nan(data):
   return data
 
 '''
-Cleans the data by removing the initial and final samples if there are values missing.
+Cleans the Data by removing the initial and final samples if there are values missing.
 '''
 def clean_data(dn_complete):
 
@@ -44,7 +44,7 @@ def clean_data(dn_complete):
   return dn_complete
 
 '''
-Fills in missing data using a KNN imputer.
+Fills in missing Data using a KNN imputer.
 '''
 def impute(dn_complete):
   imputer = KNNImputer(missing_values = np.nan, weights = 'distance', keep_empty_features=True)
@@ -75,7 +75,7 @@ def compute_average(dn_complete):
   return dn_complete
 
 '''
-Scales the data in the range [-1, 1] with a MaxAbsScaler
+Scales the Data in the range [-1, 1] with a MaxAbsScaler
 '''
 def scale(dn_complete):
 

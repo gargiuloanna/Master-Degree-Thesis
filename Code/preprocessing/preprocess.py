@@ -14,7 +14,7 @@ def preprocess(file = 'C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/
     df = remove_outliers(df)
 
     #Remove features with variance <0.01
-    df = variance(df, threshold = 0.01)
+    df = variance(df, threshold = 0.0001)
 
     #Feature Correlation
     correlation(df)
@@ -22,10 +22,10 @@ def preprocess(file = 'C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/
     data = df.iloc[:, :-1]
     labels = df.iloc[:, -1]
 
-    #Split data
+    #Split Data
     train, test, labeltrain, labeltest = train_test_split(data, labels, test_size=0.30, random_state=12345, stratify=labels)
 
-    #Scale data
+    #Scale Data
     train, test = scale(train, test)
 
     return train, test, labeltrain, labeltest

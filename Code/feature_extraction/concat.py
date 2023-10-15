@@ -3,7 +3,7 @@ import os
 
 def concat():
     frames = []
-    for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/'):
+    for root, dirs, files in os.walk('/Code/Data/features_changed/'):
         for file in files:
             print(file)
             frames.append(pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/' + file))

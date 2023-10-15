@@ -16,4 +16,5 @@ def variance(data, threshold = 0.0):
     data_transformed.insert(loc=1, column='Exercise', value=col['Task'], allow_duplicates=True)
 
     print("Variance Thresholding removed ", len(data.columns)-len(selector.get_feature_names_out()), " features")
+    print("Features Removed: ", set(data.columns).difference(set(selector.get_feature_names_out())))
     return data_transformed

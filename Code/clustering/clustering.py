@@ -26,13 +26,17 @@ if __name__ == '__main__':
     #dp['Normalized Left Step Length'] = df['Normalized Left Step Length']
     #dp['Normalized Right Step Length'] = df['Normalized Right Step Length']
     #dp['Gait Speed'] = df['Gait Speed']
+    elderly = df.iloc[:71, :-1]
+    parkinsons=df.iloc[71:102, :-1]
+    adults = df.iloc[102:, :-1]
 
-    clm = df.columns
+    clm = df.columns[:-1]
     #dp = dp.to_numpy()
-    dp = df.to_numpy()
-    clusterer = KMeans(n_clusters=n_clusters,random_state=12345,n_init=100,algorithm='elkan')
+    dp = elderly.to_numpy()
+
+    #clusterer = KMeans(n_clusters=n_clusters,random_state=12345,n_init=100,algorithm='elkan')
     #clusterer = DBSCAN(eps=15, min_samples=10)
-    #clusterer = AgglomerativeClustering(n_clusters = n_clusters)
+    clusterer = AgglomerativeClustering(n_clusters = n_clusters)
 
     cluster_labels = clusterer.fit_predict(dp)
 

@@ -22,5 +22,5 @@ def correlation(dp):
     dp.insert(loc=0, column='Patient', value=col['Patient'], allow_duplicates=True)
     dp.insert(loc=1, column='Exercise', value=col['Task'], allow_duplicates=True)
     print("Removed correlated features")
-    plot_correlation(upper, name='corr_label_lr')
+    #plot_correlation(upper, name='corr_label_lr')
     return dp
