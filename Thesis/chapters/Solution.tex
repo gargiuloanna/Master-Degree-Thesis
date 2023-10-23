@@ -1,0 +1,451 @@
+%Soluzione al problema
+\section{Introduction}
+The contribution to the problem relies in the definition of a pipeline comprised of a first phase of extraction of human readable and understandable features, and a second phase of classification. 
+Due to the nature of the problem, and the available data, the focus of this thesis shifts from the original aim of classification into high and low risk for falls, to, rather, the differentiation of gait movements of elderly but healthy patients, Parkinson's Disease patients, and adults, to identify any possible complications that may show in an asymmetrical gait and which features are the most indicative of said condition.
+
+The feature extraction is based on a previous pre-processing of the raw information, whereas the classification is performed using different explainable machine learning algorithms, where both the accuracy and relevant features are taken into consideration to identify the best model to reach the objective of this work.
+
+\section{Dataset}
+The dataset chosen for the application is \textit{The Smart Insole Dataset}, comprised of raw pressure information coming from \textit{Moticon Science} insoles, made up of 16 pressure points distributed throughout the sensor. 
+The whole dataset contains several trials performed by 29 persons in total. The patients are distinguished as follows: 13 Adults aged 20-59 years old, 10 Elderly patients whose age is above 60 to 85, and 7 Parkinson's Disease patients whose age is the range 63 to 83. The subjects are all males, with the exception of two elderly women.
+The patients had to perform both the Walk and Turn test and the TUG test. The first has the patient walk 10mt, then turn and walk back to their initial position; the latter, instead, should have the patient get up from the chair, walk 3mt, turn and go back to their initial position. Finally, the patient should sit. 
+The TUG test has been performed differently compared to its standard version: instead of having the patients walk 3mt, the authors asked them to walk 10mt for the TUG test as well. 
+Each TUG test is repeated twice in accordance with the patient's ability of motion, whereas the Walk and Turn Test is repeated twice for each version chosen by the authors: Walk and Turn Slow Speed, Walk and Turn Normal Speed, Walk and Turn High Speed.
+
+For each patient, the available tests are:
+
+\input{tables/chapter3/trials}
+
+For the recordings, the sampling rate was set at 100Hz. The generated file for each recording includes 51 features in total. Specifically, 25 values for the left and 25 values for the right leg plus the timestamp:
+
+\begin{itemize}
+    \item The Timestamp (cs);
+    \item The pressure from 1 to 16 sensors $(N/cm^{2})$;
+    \item The acceleration in the X, Y, Z axes (g);
+    \item The angular rate in $\omega x, \omega y, \omega z$ (dps);
+    \item The computed center of pressure in the X, Y axes; \item The computed total force (N).
+\end{itemize}
+
+The dataset is labelled so that each sample (of each test, for each patient) displays both the activity performed by the patient and the gait phase associated with that activity. As a conclusion, the dataset is not labelled to differentiate between high and low risk for falls, neither to distinguish between classes. Therefore, a label has been added to identify the elderly patients as \enquote{0}, the Parkinson's Disease Patients as \enquote{1}, and the adults as \enquote{2}.
+
+
+
+
+\section{Data Pre - processing}
+The first step of the analysis consists in a pipeline of data pre-processing. Since the dataset contains raw data coming from the insoles, it is likely that there exists samples for which the information of certain sensors might be missing. Therefore, each of the trials is checked for NaN (missing) values. 
+If the trial contains any, then two different approaches are taken depending on the position of the individual sample considered: a chunk of the samples coming from the initial and final phase of the trial are removed if they contain a consecutive number of missing values. Instead, if the samples coming from the middle of trial contain missing values, then they are imputed using a KNN Imputer, a type of univariate imputation algorithm, which imputes values in the i-th feature dimension using only non-missing values in that feature dimension.
+The imputer is a \enquote{k-Nearest Neighbors} algorithm, meaning that each sample’s missing values are imputed using the mean value from k nearest neighbors found in the training set.
+The number of neighbors \textit{K} is a hyper-parameter of the algorithm, which is set to 5 in this particular instance. Moreover, the neighbors to the missing value are weighted by the inverse of their distance, meaning that closer neighbors of a missing data point will have a greater influence than neighbors which are further away. This particular technique is chosen since the data is a time-series, which changes over time with a certain regularity, or period.
+
+Two approaches are chosen because it is necessary to remove any missing values before proceeding with any further step, but it is mandatory to preserve data quality. By removing some samples, the data quality is not diminished, and at the same time the number of imputations included in the data is reduced to the minimum.
+
+An example below.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1\textwidth]{images/ImputationExample.png}
+    \caption{Example of value imputated during pre - processing}
+    \label{fig:imputation}
+\end{figure}
+
+
+The second step is data scaling. The values of each individual feature are scaled in the range [-1, 1] using a MaxAbsScaler since the unit of measures differ among measurements. The choice for this particular scaler relies in robustness of the scaler to very small standard deviations of features and its ability to preserve zero entries in sparse data. Moreover, there are no assumptions on the distribution of the data, and, since the dataset contains acceleration values, these are positive or negative depending on the direction of the movement with respect to the coordinate axis, so it is important to keep negative values.
+
+\section{Gait Phases Extraction Algorithm}
+The human readable gait features can be extracted only if the information about gait phases for each sample is available. 
+Gait is a skill, defined in \cite{BIOmechanics} as the cyclic motion of lower and upper limbs that aims to move the body forward. Gait analysis is the procedure that observes, records, analyzes, and interprets movement patterns performed as part of the skill of gait.
+The process of Gait Analysis starts with the definition of the \textit{Gait Cycle}, which is composed by the sequence of movements performed when one foot makes contact with the ground and ends when that same foot contacts the ground again. It is usually divided into two periods, stance and swing. The stance period is the time during which the foot is in contact with the ground, whereas the swing period follows the stance period and is the time during which the same foot is in the air. The separation of the two periods is discerned by the
+toe-off.
+Normally, the stance period represents the first
+60\% of the Gait Cycle and the swing the latter 40\%, with the Single Leg Support representing the 40\% of the stance phase, and the Double Leg Support the latter 20\%. 
+Although gait literature expands on different definitions of gait phases, for the objective of this thesis only four  gait phases are relevant: heel strike, foot flat, heel rise and toe off.
+
+Heel strike is defined as the initial contact of the foot with the ground; Foot Flat begins with initial contact and continues until the contra-lateral foot leaves the ground; Heel Rise, instead, begins when the heel leaves the floor and continues until the contra-lateral foot contacts the ground; lastly, Toe off begins when the contra-lateral foot contacts the ground and continues until the ipsilateral foot leaves the ground. It provides the final burst of propulsion as the toes leave the ground.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1\textwidth]{images/gaitphases.jpg}
+    \caption{Gait Phases referred to the right leg (in blue)}
+    \label{fig:gaitphases}
+\end{figure}
+To extract gait phases, the values of the individual samples are first averaged to obtain two different signals: the first 6 sensors are used to compute the mean value of the pressure in the heel area of the patient; the last 8 sensors are, instead, used to compute the mean value of the pressure in the toe area. Two sensors are left unused: the 7th and 8th sensor, located in the middle of the foot, as their contributions to the overall signals were irrelevant.
+
+
+Using these signals, a gait phase extraction algorithm is defined. Since the data is previously scaled, a consideration can be made regarding the value of the two mean signals when the heel strike, foot flat and toe off phases are occurring.
+Heel strike is characterized by an increasing slope of the average heel signal up until a local maximum; for foot flat, the two mean signals are around the same value; for toe off, the mean toe signal increases as the foot starts leaving the ground and then decreases towards 0.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1\textwidth]{images/mean signal example.png}
+    \caption{Example of the Average Heel and Toe Pressure Signals on patient EL001.}
+    \label{fig:Example of the Average Heel and Toe Pressure Signals on patient EL001.}
+\end{figure}
+
+Taking all of this into consideration, to define gait phases the mean toe signal is subtracted to the mean heel signal. This allows to have, in time, a signal whose maximums are in correspondence of heel strikes, and the minimums correspond to toe offs. Additionally, the values above the mean (which is around 0) correspond to foot flats, whereas the ones below correspond to heel rises. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1\textwidth]{images/average heel-toe example.png}
+    \caption{Example of the Average Heel - Toe Pressure Signal on patient EL001.}
+    \label{fig:Example of the Average Heel - Toe Pressure Signal on patient EL001.}
+\end{figure}
+
+Since the patient is not already walking when the pressure data points are registered, a multivariate analysis is performed using both the acceleration values and the pressure values to determine the beginning and the ending of the walking stage. 
+Since the acceleration along the X,Y and Z axes is scaled as well, the mean value of these signals is still along 0. 
+The walking motion can be set to begin when the acceleration is above a certain threshold, and it can be set to end when it is below said threshold. By taking the exact mean value and the standard deviation of the acceleration, the threshold is defined as
+\begin{equation}
+    threshold = mean + 1 \times standard deviation
+\end{equation}
+for the positive threshold, and
+\begin{equation}
+    threshold = mean - 1 \times standard deviation
+\end{equation}
+for the negative threshold.
+
+The samples whose acceleration is found in the range [- threshold, threshold] are labelled as foot flat occurrences, since the patient is not walking, but either standing or sitting.
+
+The general idea of the whole algorithm is defined as follows:
+
+\begin{algorithm}
+\caption{Gait Phases Extraction Algorithm}\label{alg:cap}
+\begin{algorithmic}[1]
+
+\While{$signal-index \le len(signal)$}
+
+\Comment{1st case: Current value of the signal below the mean}
+\If{$signal[signal-index] \le mean$}
+    \If{$mins-index \le peaks-index$}
+    \While{$signal-index \le mins-index$}
+        \State $Gait Phase \gets Heel Rise$
+    \EndWhile
+    \EndIf
+
+
+    \If{$peaks-index \le mins-index$}
+    \While{$signal-index \le mean$}
+        \State $Gait Phase \gets Toe Off$
+        \State signal-index = signal-index + 1
+    \EndWhile
+    \EndIf
+\EndIf
+\Comment{2nd case: Current value of the signal above the mean}
+\If{$signal[signal-index] \ge mean$}
+    \If{$mins-index \le peaks-index$}
+    \While{$signal-index \le mins-index$}
+        \State $Gait Phase \gets Foot Flat$
+    \EndWhile
+    \EndIf
+
+    \If{$peaks-index \le mins-index$}
+    \While{$signal-index \le mean$}
+        \State $Gait Phase \gets Heel Strike$
+    \EndWhile
+    \EndIf
+\EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+First, the acceleration along the X axis is used to determine two phases: initial stance phase and final stance phase. The initial stance is comprised of all of the samples that lie in the range [-threshold, threshold] at the beginning of the signal, ending as soon as one of the acceleration samples lies outside the previously defined range. This is the time when the walking stage begins. The final stance phase is defined in the same way, with the only difference brings that the phase \textit{begins} with the first sample lying in the range. This is the time when the walking stage ends.
+
+Before computing the gait phases during the walking stage, the algorithm searches for the local maximums and minimums of the Mean Heel - Mean Toe signal, removing from these lists (peaks, minimums) the ones lying in the stance phases of the signal.
+
+During the walking stage, the samples are split into two main categories: the pressure samples above the mean, and the pressure samples below the mean. 
+
+For the samples above the mean the algorithm checks if a local peak is closer than a local minimum. When this condition is true, it means that the signal is characterized by an increasing slope towards the local maximum. Therefore, the samples are categorized as being Heel Strikes. On the contrary, if a local minimum is closer than a local maximum, the signal is decreasing towards said minimum, and thus, the samples are characterized as being Foot Flat instances down until the signal reaches its mean.
+
+For the samples below the mean, the behavior of the algorithm is similar: if a minimum is closer than a peak, the signal is still decreasing, therefore the samples are categorized as being heel rises (when the signal is negative, the heel pressure is lower than the toe pressure) until a minimum is reached. The opposite is true for the toe offs, defined as the range of samples that go from the local minimum up until the mean of the signal is reached.
+
+An example of the output of the algorithm on an elderly patient is shown below.
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1\textwidth]{images/comparison label.png}
+    \caption{Example of the labels computed by the algorithm on patient EL001. (1st Figure) represents the value of the acceleration on the X axis; (2nd Figure) the labels computed by the algorithm - with foot flats at the beginning and at the end of the signal in accordance with the threshold defined using the acceleration; (3rd Figure) the labels computed in The Smart Insole Dataset}
+    \label{fig:Example of the labels computed by the algorithm on patient EL001.}
+\end{figure}
+
+Samples in which the two algorithms differ greatly are the trials performed by Parkinson's Disease Patients, where the algorithm used by the authors of the dataset fails to capture gait phases. The acceleration of the fore mentioned trials is also indicative of a walking motion rather than a standing or sitting motion. Therefore, the results are considered valid.
+
+An example is shown below.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1\textwidth]{images/comparison labels pk.png}
+    \caption{Example of the labels computed by the algorithm on patient PD003. (1st Figure) represents the value of the acceleration on the X axis; (2nd Figure) the labels computed by the algorithm - with foot flats at the beginning and at the end of the signal in accordance with the threshold defined using the acceleration; (3rd Figure) the labels computed in The Smart Insole Dataset}
+    \label{fig:Example of the labels computed by the algorithm on patient PD003.}
+\end{figure}
+
+
+\section{Feature Extraction}
+
+Both gait associated features and statistical features are extracted from gait phases and signal values according to literature. A total of 107/108 features characterize each sample of the dataset, where each sample is now intended as each trial successfully completed by one patient. Thus, the total number of samples is 201/202.
+
+According to \cite{TheSmartInsoleDataset} the features extracted include:
+\begin{description}
+
+\item[Step Time]
+ (s) is described as the time between two successive Heel Strikes of different foot.
+\begin{equation}
+\begin{aligned}
+HeelStrike_{foot2_j} - HeelStrike_{foot1_j}
+\end{aligned}
+\end{equation}
+
+\item[Step Length] 
+ (m) is calculated by dividing the total distance covered (20 m) to the total number of steps (Steps Number) which is specified as the number of Heel Strikes during gait.
+\begin{equation}
+\begin{aligned}
+\frac{Distance}{StepNumber}
+\end{aligned}
+\end{equation}
+
+\item[Step Frequency] 
+ (steps/min) also called \textit{Cadence} or \textit{Walking Rate}, describes the number of steps in the unit of time. It is given by the ratio of the steps number to the time of gait, multiplied by 60 to be expressed in minutes.
+\begin{equation}
+\begin{aligned}
+\frac{Step Number}{Time} \times 60
+\end{aligned}
+\end{equation}
+
+\item[Stride Time] 
+(s) is equal to the time between two successive Heel Strikes of the same foot.
+\begin{equation}
+\begin{aligned}
+HeelStrike_{j+1} - HeelStrike_{j}
+\end{aligned}
+\end{equation}
+
+\item[Stride Length] 
+ (m) is calculated by dividing the total distance covered (20 m) to the total number of strides (Strides Number).
+\begin{equation}
+\begin{aligned}
+\frac{Distance}{Stride Number}
+\end{aligned}
+\end{equation}
+ 
+\item[Gait Velocity] 
+ (m/s), which describes the displacement in the unit of time, is given by the ratio of the total distance to the total time, or by the ratio of the mean values of stride length to stride time.
+\begin{equation}
+\begin{aligned}
+\frac{Stride Length}{Stride Time}
+\end{aligned}
+\end{equation}
+
+\item[Gait Variability] 
+ refers to the difference between the duration of the strides.
+\begin{equation}
+\begin{aligned}
+Standard Deviation(Stride Times)
+\end{aligned}
+\end{equation}
+
+ \item[Stance Time] 
+ (s) describes the total time during a gait cycle where the foot is in contact with the ground. 
+Specifically, it is described as the time where the heel of one foot, contacts the ground until the toe of the same foot 
+leaves the ground.
+\begin{equation}
+\begin{aligned}
+Toe Off_{j+1}-Heel Strike_{j}
+\end{aligned}
+\end{equation}
+
+\item[Stance Phase] (\%) it represents the percentage of gait cycle covered during Stance. It is defined as:
+\begin{equation}
+\begin{aligned}
+\frac{Stance Time}{Gait Cycle} \times 100
+\end{aligned}
+\end{equation}
+
+\item[Swing Time] 
+ (s) describes the time from the Toe Off of the one foot until the Heel Strike of the same foot.
+\begin{equation}
+\begin{aligned}
+Heel Strike_{j+1}-Toe Off_{j}
+\end{aligned}
+\end{equation}
+
+\item[Swing Phase] (\%) it represents the percentage of gait cycle in which the patient swings. It is defined as:
+\begin{equation}
+\begin{aligned}
+\frac{Swing Time}{Gait Cycle} \times 100
+\end{aligned}
+\end{equation}
+
+\item[Walk Ratio]
+(mm/step/min), represents the relationship between the width (base of gait) and the frequency of steps and is given by the ratio of step length to Step Frequency.
+\begin{equation}
+\begin{aligned}
+\frac{Step Length}{Step Frequency}
+\end{aligned}
+\end{equation}
+
+\item[Single Support Time] 
+(s), is the sub - period of the gait cycle during which one foot is in the air. It describes the time from the Toe Off of one foot until the Heel Strike of the other foot.
+\begin{equation}
+\begin{aligned}
+(Heel Strike_j - Toe Off_{j-1}) + (Heel Strike_{j+1} - Toe Off_{j})
+\end{aligned}
+\end{equation}
+
+\item[Single Support Phase] (\%) it represents the percentage of gait cycle in which the patient keeps only one on the ground. It is defined as:
+\begin{equation}
+\begin{aligned}
+\frac{Single Support Time}{Gait Cycle} \times 100
+\end{aligned}
+\end{equation}
+
+\item[Double Support Time] 
+(s), it is the sub - period of the Gait Cycle during which both feet are in contact
+with the ground. It describes the time from the Heel Strike of the first foot until the Toe Off of the other foot. It is defined as:
+\begin{equation}
+\begin{aligned}
+(Toe Off_j - Heel Strike_j) + (Toe Off_{j-1} - Heel Strike_{j-1})
+\end{aligned}
+\end{equation}
+
+\item[Double Support Phase] (\%) it represents the percentage of gait cycle in which the patient keeps both feet on the ground. It is defined as:
+\begin{equation}
+\begin{aligned}
+\frac{Double Support Time}{Gait Cycle} \times 100
+\end{aligned}
+\end{equation}
+
+\item[Gait Speed] 
+(m/s) is calculated by dividing the total distance covered (20 m) to the total time needed to complete the exercise.
+\begin{equation}
+\begin{aligned}
+\frac{Distance}{Time} \times 100
+\end{aligned}
+\end{equation}
+
+\item[Ratio (R) Index] Evaluated for different measures: Ratio of the average heel pressure and average toe pressure on one foot; Ratio of the average heel pressure and average toe pressure on both feet.
+
+\item[Skewness] is a measure of symmetry, or more precisely, the lack of symmetry. A distribution, or data set, is symmetric if it looks the same to the left and right of the center point.
+
+\item[Kurtosis]  is a measure of whether the data are heavy-tailed or light-tailed relative to a normal distribution. 
+
+\item[Approximate Entropy]  is a technique used to quantify the amount of regularity and the unpredictability of fluctuations over time-series data. It is computed using the \textit{EntropyHub} library.
+
+\end{description}
+
+
+
+
+\section{Classification Algorithms}
+
+The problem is evaluated using different Machine Learning techniques. The ones chosen are all part of the explainable machine learning algorithms and 
+are analyzed so that each model suggests the most important features in the identification of the patients belonging to the Elderly, Adults or Parkinson's Disease classes.
+Apart from considering features that are able to distinguish between the three, there is an additional study on the peculiar features that discriminate each class.
+The models used are presented below.
+
+\subsection{Random Forest}
+
+\textit{Random Forest} is a type of Decision Tree, a non-parametric model used for classification and regression that gives good 
+results both numerical and categorical features. It automatically ignores irrelevant features making few assumptions
+on the input data. Staring from a set of training data with N observations and P features, each internal node divides the patterns into groups using a test on the value 
+of a single feature. The process is repeated recursively using the children of the node, until a leaf node is reached. A leaf node represents groups of patterns that are easy to classify (e.g. using the class of the majority of 
+them) or to regress (e.g. using a constant value corresponding to the average y of the group).
+Since decision trees suffer from high variance, i.e. splitting the training data into two 
+parts at random, the results of the two parts may be quite different. 
+Bootstrap aggregation, or bagging, is a general-purpose procedure for reducing the 
+variance of a statistical learning method: by taking many training sets from the population and builing a separate 
+prediction model using each training set, the resulting predictions are averaged to obtain the final classification or regression value.
+Random forests provide an improvement over bagged trees by way of a small tweak that 
+decorrelates the trees. It is a multi-classifier approach: combining many (possibly independent) 
+decision trees, a more robust classifier is obtained, that is, a Random Forest. Usually a simple combination rule, like majority voting, is used to combine the results of the individual trees into a single output.
+In Random Forests a high number of tree classifiers (e.g. 100 or more) is trained using the same 
+algorithm. 
+For the purpose of this thesis, the dataset has been bootstraped to train each tree using only a subset of the training set, obtained by random sampling.
+Usually $\frac{2}{3}$ of the full training set are used to train the trees, whereas the the last third, called \eqnuote{out of bag} samples, are used as a validation set.
+
+
+\subsection{Support Vector Machine}
+
+\textit{Support Vector Machine (SVM)} is an approach for classification based on the idea that samples in the P dimensional feature space can be
+separated through and hyperplane. A hyperplane is a flat affine su-space of dimension $P-1$.
+In general, if the data can be perfectly separated using a hyperplane, then there will exist an 
+infinite number of such hyperplanes. This is because a given separating hyperplane can usually be 
+shifted a tiny bit up or down, or rotated, without coming into contact with any of the observations. In 
+order to construct a classifier based upon a separating hyperplane, a decision regarding which of the infinite possible separating 
+hyperplanes to use is to be made. 
+A natural choice is the maximal margin hyperplane (also known as the optimal separating 
+hyperplane), which is the separating hyperplane that is farthest from the training observations. That 
+is, by computing the (perpendicular) distance from each training observation to a given separating 
+hyperplane, the margin is known as the minimal distance from the observations to the hyperplane.
+The maximal margin hyperplane is the separating hyperplane for which the margin is largest—that is, 
+it is the hyperplane that has the farthest minimum distance 
+to the training observations. 
+Test observations are then classified based on which side of the 
+maximal margin hyperplane it lies. This is known as the maximal margin classifier.
+Although the maximal margin classifier is often successful, it can also lead to overfitting when p is 
+large.
+The points that lie along the margin are called support vectors, vectors in p-dimensional space that
+“support” the maximal margin hyperplane in the sense that if these points were moved slightly then 
+the maximal margin hyperplane would move as well. Interestingly, the maximal margin hyperplane depends directly on the 
+support vectors, but not on the other observations: a movement to any of the 
+other observations would not affect the separating hyperplane.
+The maximal margin classifier is a very natural way to perform classification, if a separating 
+hyperplane exists. However, in many cases no separating hyperplane exists. This 
+is also the case of noisy data with outliers leading to poor solutions.
+Therefore, the concept of a separating hyperplane can be extended in order to develop a hyperplane that 
+almost separates the classes, using a so-called soft margin. The generalization of the maximal margin 
+classifier to the non-separable case is known as the support vector classifier.
+The support vector classifier, sometimes called a soft margin classifier, rather than seeking the largest 
+possible margin so that every observation is not only on the correct side of the hyperplane but also 
+on the correct side of the margin, instead allows some observations to be on the incorrect side of the 
+margin, or even the incorrect side of the hyperplane.
+The support vector classifier classifies a test observation depending on which side of a hyperplane it 
+lies. The hyperplane is chosen to correctly separate most of the training observations into the 
+classes, but may misclassify a few observations.
+The support vector classifier is a natural approach for classification in the two-class setting, if the 
+boundary between the two classes is linear. However, as it is the case with the data used for this thesis,
+there exist non-linear class boundaries. 
+In the case of the support vector classifier, the problem of possibly non-linear boundaries between classes can be 
+addressed by enlarging the feature space using quadratic, cubic,  and even higher-order polynomial functions of the predictors.
+The support vector machine (SVM) is an extension of the support vector classifier that results from 
+enlarging the feature space in a specific way, using kernels.
+\subsection{K-Nearest Neighbors}
+
+The textit{K-Nearest Neighbors} is a simple classifier that, given a positive integer K and a test observation x, 
+first identifies the K points in the training data that are closest to x, represented by N. It then estimates the conditional 
+probability for class j as the fraction of points in N whose response values equal j.
+Finally, KNN classifies the test observation x to the class with the largest probability.
+The choice of K has a drastic effect on the KNN classifier obtained.
+\subsection{Kernel Fisher Discriminant}
+
+The \textit{Kernel Fisher Discriminant}, also known as Kernel Fisher's Linear Discriminant Analysis (Kernel FDA), 
+is a nonlinear extension of the classical Fisher's Linear Discriminant Analysis (LDA). 
+Fisher's LDA is a dimensionality reduction technique and a supervised classification method used for feature selection 
+and data visualization. It seeks to find a linear combination of the original features that maximizes the separation 
+between classes in the dataset.
+
+However, when the relationship between classes in the data is not linear, Fisher's LDA may not perform optimally. 
+This is where the Kernel Fisher Discriminant comes into play. Kernel FDA is designed to handle nonlinear relationships 
+between classes by transforming the original data into a higher-dimensional space using a kernel function. 
+
+The kernel function maps the data into a space where the classes might become linearly separable.
+
+The steps involved in Kernel FDA are as follows:
+
+Choose a suitable kernel function: Common choices include the radial basis function (RBF) kernel, polynomial kernel, 
+or sigmoid kernel.
+
+Compute the kernel matrix: Calculate the pairwise similarities between data points using the chosen kernel function. 
+This results in a kernel matrix, which represents the transformed data in the higher-dimensional space.
+
+Find the eigenvectors and eigenvalues of the kernel matrix: This step is similar to the classical FDA. T
+he goal is to find the directions (eigenvectors) that maximize the separation between classes while minimizing 
+the variance within each class.
+
+Select the top eigenvectors: Choose the eigenvectors corresponding to the largest eigenvalues, 
+which represent the directions of maximum discrimination.
+
+Project the data: Project the data onto the selected eigenvectors to obtain a new feature space that enhances class separability.
+
+Kernel FDA is a powerful technique for handling complex, nonlinear relationships in data, making it valuable in various 
+applications such as pattern recognition, image analysis, and bioinformatics. It is commonly used in conjunction with support 
+vector machines (SVMs) for nonlinear classification tasks.
+
+
+
+
