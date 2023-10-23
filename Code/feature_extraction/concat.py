@@ -3,14 +3,14 @@ import os
 
 def concat():
     frames = []
-    for root, dirs, files in os.walk('/Code/Data/features_changed/'):
+    for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete'):
         for file in files:
             print(file)
-            frames.append(pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/' + file))
+            frames.append(pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete/' + file))
 
     result = pd.concat(frames, ignore_index=True)
     result.drop('Unnamed: 0', axis=1, inplace=True)
-    result.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset -features_changed.xlsx')
+    result.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset.xlsx')
     return result
 
 def mean_values():

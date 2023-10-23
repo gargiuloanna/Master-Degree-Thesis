@@ -40,6 +40,8 @@ def features(dn_complete, name):
     # Stance Time, Phase
     stance_time, left_stance_time, right_stance_time = compute_stance_time(dn_complete, left_windows_heel, right_windows_heel, left_windows_toe, right_windows_toe)
     stance_phase = compute_stance_phase(stance_time, gait_cycle)
+    left_stance_phase = compute_stance_phase(left_stance_time, left_stride_time)
+    right_stance_phase = compute_stance_phase(right_stance_time, right_stride_time)
 
     # Single Support
     single_support_time = compute_single_support_time(dn_complete, left_windows_toe, right_windows_toe, left_windows_heel, right_windows_heel)
@@ -52,6 +54,8 @@ def features(dn_complete, name):
     # Swing Time & Phase
     swing_time, swing_time_left, swing_time_right = compute_swing_time(dn_complete, left_windows_toe, right_windows_toe, left_windows_heel, right_windows_heel)
     swing_phase = compute_swing_phase(swing_time, gait_cycle)
+    left_swing_phase = compute_stance_phase(swing_time_left, left_stride_time)
+    right_swing_phase = compute_stance_phase(swing_time_right, right_stride_time)
 
     # Walk Ratio
     walk_ratio, left_walk_ratio, right_walk_ratio = compute_walk_ratio(left_step_length, left_step_frequency, right_step_length, right_step_frequency)
@@ -67,7 +71,7 @@ def features(dn_complete, name):
     single_ratio, double_toe_ratio, double_heel_ratio = double_pressure_ratio(dn_complete)
 
     # Skewness & Kurtosis
-
+    '''
     # Left Heel and Toe
     left_heel_skew = skew(dn_complete['avg left heel pressure'])
     left_heel_kurtosis = kurtosis(dn_complete['avg left heel pressure'])
@@ -131,7 +135,6 @@ def features(dn_complete, name):
     right_cntx_kurtosis = kurtosis(dn_complete['right center of pressure X[%]'])
     right_cnty_skew = skew(dn_complete['right center of pressure Y[%]'])
     right_cnty_kurtosis = kurtosis(dn_complete['right center of pressure Y[%]'])
-    '''
     # Approximate Entropy
     left_steps_number = len(get_windows(left_heel_strike))
     right_steps_number = len(get_windows(right_heel_strike))
@@ -186,6 +189,7 @@ def features(dn_complete, name):
 
     features.loc[0, 'Patient'] = patient
     features.loc[0, 'Exercise'] = task
+
     # Stride_Time (3)
     features.loc[0, 'Stride Time'] = gait_cycle
     features.loc[0, 'Left Stride Time'] = left_stride_time
@@ -221,6 +225,8 @@ def features(dn_complete, name):
 
     # Stance Phase
     features.loc[0, 'Stance Phase'] = stance_phase
+    features.loc[0, 'Left Stance Phase'] = left_stance_phase
+    features.loc[0, 'Right Stance Phase'] = right_stance_phase
 
     # Single Support Time
     features.loc[0, 'Single Support Time'] = single_support_time
@@ -241,7 +247,8 @@ def features(dn_complete, name):
 
     # Swing Phase
     features.loc[0, 'Swing Phase'] = swing_phase
-
+    features.loc[0, 'Left Swing Phase'] = left_swing_phase
+    features.loc[0, 'Right Swing Phase'] = right_swing_phase
     # Stride Velocity (3)
     features.loc[0, 'Stride Velocity'] = gait_velocity
     features.loc[0, 'Left Stride Velocity'] = left_gait_velocity
@@ -261,7 +268,7 @@ def features(dn_complete, name):
     features.loc[0, 'Left - Right Single Ratio'] = single_ratio
     features.loc[0, 'Heel Ratio'] = double_heel_ratio
     features.loc[0, 'Toe Ratio'] = double_toe_ratio
-
+    '''
     # Skewness
     features.loc[0, 'Avg Left Heel Pressure Skewness'] = left_heel_skew
     features.loc[0, 'Avg Left Toe Pressure Skewness'] = left_toe_skew
@@ -311,6 +318,55 @@ def features(dn_complete, name):
     features.loc[0, 'Right Total Force Kurtosis'] = right_force_kurtosis
     features.loc[0, 'Right COP X Kurtosis'] = right_cntx_kurtosis
     features.loc[0, 'Right COP Y Kurtosis'] = right_cnty_kurtosis
+    '''
+    features.loc[0, 'Avg Left Heel Pressure Skewness'] =old_features['Avg Left Heel Pressure Skewness'].values
+    features.loc[0, 'Avg Left Toe Pressure Skewness'] = old_features['Avg Left Toe Pressure Skewness'].values
+    features.loc[0, 'Left Acceleration X Skewness'] = old_features['Left Acceleration X Skewness'].values
+    features.loc[0, 'Left Acceleration Y Skewness'] = old_features['Left Acceleration Y Skewness'].values
+    features.loc[0, 'Left Acceleration Z Skewness'] =old_features['Left Acceleration Z Skewness'].values
+    features.loc[0, 'Left Angular X Skewness'] =old_features['Left Angular X Skewness'].values
+    features.loc[0, 'Left Angular Y Skewness'] =old_features['Left Angular Y Skewness'].values
+    features.loc[0, 'Left Angular Z Skewness'] =old_features['Left Angular Z Skewness'].values
+    features.loc[0, 'Left Total Force Skewness'] =old_features['Left Total Force Skewness'].values
+    features.loc[0, 'Left COP X Skewness'] =old_features['Left COP X Skewness'].values
+    features.loc[0, 'Left COP Y Skewness'] =old_features['Left COP Y Skewness'].values
+
+    features.loc[0, 'Avg Right Heel Pressure Skewness'] =old_features['Avg Right Heel Pressure Skewness'].values
+    features.loc[0, 'Avg Right Toe Pressure Skewness'] =old_features['Avg Right Toe Pressure Skewness'].values
+    features.loc[0, 'Right Acceleration X Skewness'] =old_features['Right Acceleration X Skewness'].values
+    features.loc[0, 'Right Acceleration Y Skewness'] =old_features['Right Acceleration Y Skewness'].values
+    features.loc[0, 'Right Acceleration Z Skewness'] =old_features['Right Acceleration Z Skewness'].values
+    features.loc[0, 'Right Angular X Skewness'] = old_features['Right Angular X Skewness'].values
+    features.loc[0, 'Right Angular Y Skewness'] =old_features['Right Angular Y Skewness'].values
+    features.loc[0, 'Right Angular Z Skewness'] =old_features['Right Angular Z Skewness'].values
+    features.loc[0, 'Right Total Force Skewness'] =old_features['Right Total Force Skewness'].values
+    features.loc[0, 'Right COP X Skewness'] = old_features['Right COP X Skewness'].values
+    features.loc[0, 'Right COP Y Skewness'] =old_features['Right COP Y Skewness'].values
+
+    # Kurtosis
+    features.loc[0, 'Avg Left Heel Pressure Kurtosis'] =old_features.loc[0, 'Avg Left Heel Pressure Kurtosis'].values
+    features.loc[0, 'Avg Left Toe Pressure Kurtosis'] =old_features.loc[0, 'Avg Left Toe Pressure Kurtosis'].values
+    features.loc[0, 'Left Acceleration X Kurtosis'] = old_features.loc[0, 'Left Acceleration X Kurtosis'].values
+    features.loc[0, 'Left Acceleration Y Kurtosis'] =old_features.loc[0, 'Left Acceleration Y Kurtosis'].values
+    features.loc[0, 'Left Acceleration Z Kurtosis'] =old_features.loc[0, 'Left Acceleration Z Kurtosis'].values
+    features.loc[0, 'Left Angular X Kurtosis'] =old_features.loc[0, 'Left Angular X Kurtosis'].values
+    features.loc[0, 'Left Angular Y Kurtosis'] =old_features.loc[0, 'Left Angular Y Kurtosis'].values
+    features.loc[0, 'Left Angular Z Kurtosis'] =old_features.loc[0, 'Left Angular Z Kurtosis'].values
+    features.loc[0, 'Left Total Force Kurtosis'] =old_features.loc[0, 'Left Total Force Kurtosis'].values
+    features.loc[0, 'Left COP X Kurtosis'] =old_features.loc[0, 'Left COP X Kurtosis'].values
+    features.loc[0, 'Left COP Y Kurtosis'] =old_features.loc[0, 'Left COP Y Kurtosis'].values
+
+    features.loc[0, 'Avg Right Heel Pressure Kurtosis'] =old_features.loc[0, 'Avg Right Heel Pressure Kurtosis'].values
+    features.loc[0, 'Avg Right Toe Pressure Kurtosis'] =old_features.loc[0, 'Avg Right Toe Pressure Kurtosis'].values
+    features.loc[0, 'Right Acceleration X Kurtosis'] = old_features.loc[0, 'Right Acceleration X Kurtosis'].values
+    features.loc[0, 'Right Acceleration Y Kurtosis'] = old_features.loc[0, 'Right Acceleration Y Kurtosis'].values
+    features.loc[0, 'Right Acceleration Z Kurtosis'] =old_features.loc[0, 'Right Acceleration Z Kurtosis'].values
+    features.loc[0, 'Right Angular X Kurtosis'] =old_features.loc[0, 'Right Angular X Kurtosis'].values
+    features.loc[0, 'Right Angular Y Kurtosis'] =old_features.loc[0, 'Right Angular Y Kurtosis'].values
+    features.loc[0, 'Right Angular Z Kurtosis'] =old_features.loc[0, 'Right Angular Z Kurtosis'].values
+    features.loc[0, 'Right Total Force Kurtosis'] =old_features.loc[0, 'Right Total Force Kurtosis'].values
+    features.loc[0, 'Right COP X Kurtosis'] =old_features.loc[0, 'Right COP X Kurtosis'].values
+    features.loc[0, 'Right COP Y Kurtosis'] =old_features.loc[0, 'Right COP Y Kurtosis'].values
 
     #Approximate Entropy
     features.loc[0, 'Avg Left Heel Pressure ApEn'] = old_features['Avg Left Heel Pressure ApEn'].values
@@ -374,14 +430,14 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/gaitphases/'):
+for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete/'):
     if len(files) != 0:
         folder = root
         for file in files:
             patient = file.split("_")[0]
             task = file.split("_")[1].split(".")[0]
             name = patient + ' - ' + task + '.xlsx'
-            if not os.path.exists(os.path.join('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/', name)):
+            if not os.path.exists(os.path.join('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete/', name)):
                 print("Examining ", folder, file)
                 dn_complete = pd.read_excel(folder + '/' + file)
 

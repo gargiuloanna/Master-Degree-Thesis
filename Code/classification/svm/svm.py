@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
 
     svm = SVC(class_weight='balanced', kernel='poly',
-              C=0.7, degree=3, coef0=11, decision_function_shape='ovo')
+              C=0.7, degree=3, coef0=14, decision_function_shape='ovo')
 
     svm.fit(train, labeltrain)
 

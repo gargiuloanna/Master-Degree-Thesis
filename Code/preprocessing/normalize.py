@@ -118,7 +118,7 @@ def normalize(data, mean = True, sides = True):
 
 
 if __name__ == '__main__':
-    df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset -features_changed.xlsx')
+    df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset -features-complete.xlsx')
     df.drop(['Unnamed: 0'], axis=1, inplace=True)
 
 
@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     data.to_excel("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-normalized lengths.xlsx")
 
-    data.drop(["Double Support Time","Single Support Time","Right Stride Time","Right Stride Time","Right Swing Time",
+    data.drop(["Double Support Time","Single Support Time","Right Stride Time","Left Stride Time","Right Swing Time",
                 "Left Step Frequency (Cadence)","Right Step Frequency (Cadence)","Left Step Length","Right Step Length",
                 "Left Stance Time","Right Stance Time","Left Swing Time","Right Stride Length", "Left Stride Length",
                "Stride Length","Step Length","Step Frequency (Cadence)","Stance Time","Swing Time","Step Time","Stride Time"],

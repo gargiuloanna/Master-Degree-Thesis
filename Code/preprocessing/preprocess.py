@@ -5,7 +5,7 @@ from Code.preprocessing.scale import scale
 from Code.preprocessing.correlation import correlation
 from sklearn.model_selection import train_test_split
 
-def preprocess(file = 'C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-only normalized lengths -lr.xlsx'):
+def preprocess(file = 'C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-onlynormalizedlr.xlsx'):
 
     df = pd.read_excel(file)
     df.drop(['Unnamed: 0'], axis=1, inplace=True)
