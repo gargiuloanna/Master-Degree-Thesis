@@ -1,0 +1,159 @@
+% !TEX root = C:/Users/annin/git/Master-Degree-Thesis/Thesis/main.tex
+\documentclass[a4paper, 12pt, oneside, hidelinks]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=3cm, bindingoffset=1cm]{geometry}
+\linespread{1.5}
+\usepackage{float}
+\usepackage[autostyle]{csquotes}
+\usepackage{subfig}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{indentfirst}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{array}
+\setlength{\parindent}{1cm}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ \uppercase{#1}}{}}
+\fancyhf{}
+\fancyhead[C]{\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\setlength{\headheight}{14.49998pt}
+\headsep = 37pt
+\graphicspath{ {./images/} }
+%\usepackage[Conny]{fncychap}
+
+
+
+
+\title{Master's Degree Thesis}
+\author{Anna Gargiulo}
+\date{2023}
+
+
+
+\newenvironment{dedication}
+  {\clearpage           % we want a new page
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{1}}% some space at the top 
+   \itshape             % the text is in italics
+   \raggedleft          % flush to the right margin
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Frontmatter
+\begin{titlepage}
+
+    \begin{center}
+        {\Large\textsc{\scalebox{1.2}{University}}} 
+        {\Large\textsc{{OF}}} 
+        {\Large\textsc{\scalebox{1.2}{Salerno}}}     
+        \noindent\vspace{4mm}
+        %\rule[1ex]{\dimexpr\linewidth-1mm}{2.5pt}\hspace{0.1mm}
+        
+        %Dipartimento
+    	\uppercase{\normalsize Dept. of Information and Electrical Engineering \\and Applied Mathematics }\\
+    \end{center}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.35\textwidth]{logo_unisa.png}
+    \end{figure}
+    
+    \begin{center}
+        %Corso di Laurea
+    	\normalsize{\textbf{Master's Degree in \\Digital Health and Bioinformatic Engineering \\}}
+        \small{\textbf{\\}}
+    	\vspace{15mm}
+    	%Titolo
+        {\Large{\bf Wearable sensor platform for gait analysis and fall prevention}}\\
+    	\vspace{3mm}
+    \end{center}
+    
+    \vspace{15mm}
+    \noindent
+    \begin{minipage}[t]{0.47\textwidth}
+        %Relatore
+    	{\large{ \textbf{Supervisor}:\\\bf Prof. Ritrovato Pierluigi}}
+    	\vspace{2mm}\\
+     {\large{ \textbf{Co - Supervisor}:\\\bf Prof. Moscato Francesco}}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.4\textwidth}\raggedleft
+        %Candidato
+    	{\large{\textbf{Author}: \\ \bf Gargiulo Anna\\ 0622900139}}
+    \end{minipage}
+    
+    \vspace{20mm}
+    
+    %Anno Accademico
+    \centering{{ \bf Academic Year 2022-2023 }}
+
+\end{titlepage}
+\input{chapters/dedication}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Thesis Body
+
+\tableofcontents
+\clearpage
+\sloppy
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+
+\chapter{Introduction}
+\input{chapters/Introduction}
+
+\chapter{State Of The Art}
+\input{chapters/StateOfArt}
+
+\chapter{Original contribution to the solution of the problem}
+\input{chapters/Solution}
+
+\chapter{Experimental validation and application aspects}
+\input{chapters/chapter04}
+
+
+
+\chapter{Conclusions}
+\input{chapters/chapter05}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\listoffigures
+\addcontentsline{toc}{chapter}{\listfigurename}
+
+\clearpage
+\listoftables
+\addcontentsline{toc}{chapter}{\listtablename}
+
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{chapters/bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+
+\clearpage
+\end{document}
