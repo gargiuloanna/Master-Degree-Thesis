@@ -7,16 +7,17 @@ from joblib import dump
 
 if __name__ == '__main__':
 
-        train, test, labeltrain, labeltest =preprocess()
+        train, test, labeltrain, labeltest =preprocess('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-only normalized lengths.xlsx')
         name="RandomForest_GridSearch"
-
+#Best random forest with params: {'criterion': 'entropy', 'max_depth': 6, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100}
+        #'criterion': 'entropy', 'max_depth': 6, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100
         print("[RANDOM FOREST] Searching best params with GridSearchCV")
 
         rdf_model = RandomForestClassifier(random_state=0,
                                            oob_score=balanced_accuracy_score,
                                            class_weight='balanced')
         param_grid = {
-            'n_estimators': [40, 50, 60, 70, 100],
+            'n_estimators': [70, 100, 110, 120, 130, 140, 150],
             'criterion': ['gini', 'entropy'],
             'max_depth': [3, 4, 5, 6, 7, 8],
             'min_samples_split': [2, 5, 10, 20],

@@ -37,16 +37,6 @@ if __name__ == "__main__":
     file.write("Test Accuracy: " + str(predict_score(svm_gridcv.best_estimator_, test, labeltest)) + '\n')
     file.close()
 
-    # Plots
-    svm_importances(svm_gridcv.best_estimator_, train)
-    confusion_matrix(svm_gridcv.best_estimator_, test, labeltest, name=name)
-
-    # Misclassification
-    y_test = np.asarray(labeltest)
-    misclassified = np.where(y_test != svm_gridcv.best_estimator_.predict(test))
-    for ind in misclassified[0]:
-        print(test.loc[ind])
-
 
 
     #[SVM] Best SVM model with params: {'C': 0.7, 'coef0': 4.9, 'decision_function_shape': 'ovo', 'degree': 3, 'kernel': 'poly'} and score: 0.841

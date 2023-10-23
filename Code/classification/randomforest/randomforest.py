@@ -9,10 +9,10 @@ from joblib import dump
 
 if __name__ == '__main__':
 
-    train, test, labeltrain, labeltest = preprocess()
+    train, test, labeltrain, labeltest = preprocess(file = 'C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-only normalized lengths.xlsx')
 
     seed = 5436398
-    name = "randomforest/RandomforestWholePreprocess "+str(seed)
+    name = "randomforest/RandomforestWholePreprocess_"+str(seed)
 
     clf = RandomForestClassifier(criterion='entropy', max_depth=8, max_features='sqrt', min_samples_split=10,
                                  min_samples_leaf=1, n_estimators=100, random_state=5436398, oob_score=balanced_accuracy_score,
