@@ -6,9 +6,9 @@ if __name__ == '__main__':
 
         name = "knn/KNN_SFS"
         train, test, labeltrain, labeltest = preprocess()
-
+        '''
         for i in range(1,len(train.columns)):
-            clf_gridcv = KNeighborsClassifier(algorithm='auto', metric='minkowski', n_neighbors=1, p=2, weights='uniform', n_jobs=-1)
+            clf_gridcv = KNeighborsClassifier(algorithm='auto', metric='minkowski', n_neighbors=1, p=1, weights='uniform', n_jobs=-1)
             sfs = SequentialFeatureSelector(clf_gridcv,n_features_to_select=i, tol=None, direction='forward', scoring='balanced_accuracy', cv=10,
                                             n_jobs=-1)
             print(sfs.fit(train, labeltrain))
@@ -24,3 +24,13 @@ if __name__ == '__main__':
             file.write("Test Accuracy: " + str(clf_gridcv.score(sfs.transform(test), labeltest)) + '\n')
             file.write("Features: " + str(sfs.get_feature_names_out(train.columns)) + '\n')
             file.close()
+        '''
+        clf_gridcv = KNeighborsClassifier(algorithm='auto', metric='minkowski', n_neighbors=1, p=1, weights='uniform', n_jobs=-1)
+        sfs = SequentialFeatureSelector(clf_gridcv, n_features_to_select='auto', tol=0.01, direction='forward', scoring='balanced_accuracy', cv=10,
+                                        n_jobs=-1)
+        print(sfs.fit(train, labeltrain))
+
+        clf_gridcv.fit(sfs.transform(train), labeltrain)
+        print("Train Score: ", clf_gridcv.score(sfs.transform(train), labeltrain))
+        print("Test Score: ", clf_gridcv.score(sfs.transform(test), labeltest))
+        print("Features: ", sfs.get_feature_names_out(train.columns))

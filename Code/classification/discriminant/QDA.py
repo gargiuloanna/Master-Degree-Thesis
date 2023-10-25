@@ -1,21 +1,31 @@
 
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 import pandas as pd
 
-from Code.plotting.plots import confusion_matrix, plot_barh, random_forest_fimp, permutation_imp, feature_importance, plot_correlation
-from Code.preprocessing.scale import scale
-from  sklearn.metrics import balanced_accuracy_score
+from Code.plotting.plots import confusion_matrix
 import os
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-import numpy as np
+from Code.preprocessing.outlier_detection import remove_outliers
+from Code.preprocessing.variance_thresholding import variance
+from Code.preprocessing.correlation import correlation
+
 
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis, LinearDiscriminantAnalysis
 if __name__ == '__main__':
     name = "QDAGridSearch"
-    df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-only normalized lengths -lr.xlsx')
-    df.drop(['Unnamed: 0', 'Patient', 'Exercise'], axis=1, inplace=True)
+    df = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-onlynormalizedlr.xlsx')
+    df.drop(['Unnamed: 0'], axis=1, inplace=True)
 
+    # Check for outliers and remove them
+    df = remove_outliers(df)
+
+    # Remove features with variance <0.01
+    df = variance(df, threshold=0.0001)
+
+    # Feature Correlation
+    df = correlation(df)
+    df.drop(['Patient', 'Exercise'], axis=1, inplace=True)
     data = df.iloc[:, :-1]
     labels = df.iloc[:, -1]
 

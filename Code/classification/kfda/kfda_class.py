@@ -1,14 +1,19 @@
 """Module kfda"""
-import warnings
-from scipy.sparse.linalg import eigsh
-from scipy.sparse import eye
-from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin
-from sklearn.metrics import pairwise_kernels
 from sklearn.neighbors import NearestCentroid
-from sklearn.utils.multiclass import unique_labels
-from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
+from sklearn.metrics.pairwise import pairwise_kernels
+from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.utils.multiclass import unique_labels
+from sklearn.utils.validation import check_is_fitted
+import warnings
 import numpy as np
+
+from eig import eigsh
+from scipy.sparse import eye
+
+
+
+
 
 
 class Kfda(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -76,7 +81,6 @@ class Kfda(BaseEstimator, ClassifierMixin, TransformerMixin):
         y : array, shape = [n_samples]
             Target values (integers)
         """
-        X, y = check_X_y(X, y)
         self.classes_ = unique_labels(y)
         if self.n_components > self.classes_.size - 1:
             warnings.warn(
@@ -103,7 +107,7 @@ class Kfda(BaseEstimator, ClassifierMixin, TransformerMixin):
         M = m_classes_centered.T @ m_classes_centered
 
         # Find weights
-        w, self.weights_ = eigsh(M, self.n_components, N, which='LM')
+        w, self.weights_ = eigsh(M, self.n_components, N)
 
         # Compute centers
         centroids_ = m_classes @ self.weights_
@@ -141,8 +145,6 @@ class Kfda(BaseEstimator, ClassifierMixin, TransformerMixin):
         """
         check_is_fitted(self)
 
-        X = check_array(X)
-
         projected_points = self.transform(X)
         predictions = self.clf_.predict(projected_points)
 
@@ -158,7 +160,6 @@ class Kfda(BaseEstimator, ClassifierMixin, TransformerMixin):
             Target values (integers)
         """
         check_is_fitted(self)
-        X, y = check_X_y(X, y)
 
         new_classes = np.unique(y)
 

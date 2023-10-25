@@ -27,6 +27,7 @@ if __name__ == '__main__':
         # Write to File
         file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/logs/knn/knn_gs.txt", "a")
         file.write("\nModel " + name + '\n')
+        file.write(f"Best KNN with params: {clf_gridcv.best_params_} and score {clf_gridcv.best_score_}")
         file.write("Train Accuracy: " + str(clf.score(train, labeltrain)) + '\n')
         file.write("Test Accuracy: " + str(clf.score(test, labeltest)) + '\n')
         file.close()
