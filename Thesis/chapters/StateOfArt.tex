@@ -1,7 +1,7 @@
 %cap2 stato dell'arte su metodi ingegneristisci per la prevenzione delle cadute, mediante utilizzo di sensori indossabili, possibili dataset disponibili
-This chapter will focus on a review of the available literature on fall prevention using wearable sensors and machine learning techniques, to highlight the common approaches used in the last few years.
+This chapter will focus on a review of the available literature on fall prevention using wearable sensors and machine learning techniques to highlight the common approaches used in the last few years.
 
-Moreover, there will be an overview on the available datasets for the purpose of the thesis, and their characteristics, linked with their availability.
+Moreover, there will be an overview on the available datasets for the purpose of the thesis and their characteristics, linked with their availability.
 
 Lastly, a brief explanation on the challenges of the available state of the art, emerging trends and conclusion.
 \section{Literature Review}
@@ -9,24 +9,24 @@ Lastly, a brief explanation on the challenges of the available state of the art,
 \subsection{Common Approaches}
 A first review on the state of the art was proposed by \cite{FallRiskAssessment_WearableSensors_SystematicReview}. 
 The paper aims at identifying the most common technologies utilized to recognize the risk of fall by evaluating selected articles, 
-from 2002 to 2019, based on a predefined criteria,to detect a fall and to classify the elderly as \enquote{faller} and \enquote{not faller}.  
+from 2002 to 2019, based on a predefined criteria, to detect a fall and to classify the elderly as \enquote{faller} and \enquote{not faller}.  
 Focusing on fall risk prediction articles, the authors highlighted that the most common wearable sensor used is the accelerometer, together with the gyroscope. These devices were used in the 17.2\% of the publications to capture gait data. In particular, the best locations to identify the level of risk are the lumbar and waist areas, which were the most popular among the articles considered. Moreover, their sampling rate were mostly 50Hz or 100Hz, although the parameters ranged from 4Hz to 256 Hz. 
-Lastly, the methodology most used is the feature extraction, compared to machine learning alone. \\
+Lastly, the methodology most used is the feature extraction, compared to machine learning alone. 
 
 \subsection{Tinetti Scale to automatically determine fall risk}
 Predicting falls is a task most centered around the elderly who should be, first of all, classified at risk of falling. An experiment carried out by Rivolta et al. \cite{TinettiScale}, studied the data acquired from 90 participants (79 elderly and 11 healthy volunteers) located into two rehabilitation centers in Northen Italy to asses their risk of falling using the data captured by only one accelerometer attached to the waist. The aim of the study was to create an automated system that could be used at home to predict the risk of a fall.
 The study is based on the Tinetti Scale; therefore, the tasks that the participants were asked to perform were both the Gait and Balance activities that comprise the test. Later, this data was used to first study the features obtained by pre-processing the data to establish the differences between high risk fallers and low risk fallers. Secondly, the features were selected using a linear regression to determine those related to the Tinetti Scale; Thirdly, the reduced feature set was used to train two classification models (linear model and artificial neural network) to automatically detect those affected by the risk of fall; Lastly, the scores from the Tinetti Scale were tested to determine which ones were more affected by misjudgments. 
 
-As for the first task, the authors found out that 12 out of 21 features were different among the two groups, such as age and gender, while BMI is not significative to determine the difference between high and low risk.
-Moreover, as regards balance, the Standing UP Duration, Balance Recovery after nudge and regularity of standing were highly different; whereas the 360 degree turn and the sitting down activities do not differ between the two groups.
-As for gait, instead, all the features differ (Step Frequency, Step Regularity - vertical axis, Surrogated Step Height and Trunk Lateral Sway) except Step Regularity computed on the horizontal axis. 
+As for the first task, the authors found out that 12 out of 21 features were different among the two groups, such as age and gender. 
+Moreover, as regards balance, the Standing Up Duration, Balance Recovery after nudge and regularity of standing were highly different; instead, the 360 degree turn and the sitting down activities do not differ between the two groups.
+As for gait, all the features differ (Step Frequency, Step Regularity - vertical axis, Surrogated Step Height and Trunk Lateral Sway) except Step Regularity computed on the horizontal axis. 
 
 For the second task, Rivolta et al. used LASSO with parameter $\lambda$ = 0.7 to reduce the set to 9 features: Triangle duration along the Anterior/Posterior axis (determined intersecting two straight lines having the maximum and minimum slopes, with the
-AP baseline before and after standing up),  Immediate Standing Unbalance for the Standing Up Tinetti Task, Lateral Oscillations of the participant's body when nudged by the specialist, Sample Entropy for Task 5 of the test, and Step Regularity on the vertical axis and Trunk Lateral Sway for the walking task, BMI, Gender and Age.
+AP baseline before and after standing up),  Immediate Standing Unbalance for the Standing Up Tinetti Task, Lateral Oscillations of the participant's body when nudged by the specialist, Sample Entropy for Task 5 of the test,  Step Regularity on the vertical axis and Trunk Lateral Sway for the walking task, BMI, Gender and Age.
 
 The classification task involves one regression and one binary classification. The regression performance was measured by the Pearson's correlation coefficient while classification performances were assessed using sensitivity and specificity.
-First, the linear regression was trained on the parameters of the Tinetti scores in the training set. Then the artificial neural network was used to understand if it would have a lower number of misclassifications compared to the first approach. 
-First, a standard linear regression was used to fit the LM parameters
+First, the linear regression (LR) was trained on the parameters of the Tinetti scores in the training set. Then the artificial neural network (ANN) was used to understand if it would have a lower number of misclassifications compared to the first approach. 
+First, a standard linear regression was used to fit the LR parameters
 on the Tinetti scores of the training set. The model was applied on the
 test set and the estimated scores were dichotomized at 18 as in the
 regular Tinetti test.
@@ -42,7 +42,7 @@ For the gait parts, path related to the floor, trunk sway and walking stance sho
 For both parts, a wrong standing balance led to the highest error rate.
 
 \subsection{Random Forest Classifiers}
-Another article used random forest algorithms to classify frailty and falling history in seniors using plantar pressure measurement insoles \cite{RandomForestInsoles}. This study aimed at providing an analysis on the gait of the elderly using insoles able to capture seven signals coming from each foot. Then, the data has been processed to obtain the determining features of the gait, obtaining up to 182 features later analyzed using random forest algorithms. 
+Another article used random forest algorithms to classify frailty and falling history in seniors using plantar pressure measurement insoles \cite{RandomForestInsoles}. This study aimed at providing an analysis on the gait of the elderly using insoles that are able to capture seven signals coming from each foot. Then, the data has been processed to obtain the determining features of the gait, obtaining up to 182 features later analyzed using random forest algorithms. 
 The dataset used for the study is comprised of 774 elderly people from Japan. 
 The experiment involved different tasks:
 \begin{itemize}
@@ -54,20 +54,20 @@ A total of 203 subjects were considered frail by using the Kihon checklist, whil
 A total of 5 categories for features were extracted from the walking data:
 \begin{description}
     \item[Frequency Domain Analysis] A fast Fourier transform was performed after the output of the 14 sensors was summed at each sampling point to integrate the temporal information on only one time series.This category includes four extracted features.
-    \item[Peak analysis and area under the curves]First, three parameters were extracted for each isolated step and each sensor: maximum pressure,the time at which this maximum pressure occurred relative to the total stance time, the area under the pressure curve was extracted for each isolated step and for each sensor. Second, the four following data features were calculated for each trial and each of the three parameters: the average of all the left foot steps, the standard deviation of all the left foot isolated steps, the standard deviation of all isolated steps of both feet, and the left and right foot average difference. Thus, this results in 84 extracted features in this category.
+    \item[Peak analysis and area under the curves] First, three parameters were extracted for each isolated step and each sensor: maximum pressure,the time at which this maximum pressure occurred relative to the total stance time, the area under the pressure curve was extracted for each isolated step and for each sensor. Second, the four following data features were calculated for each trial and each of the three parameters: the average of all the left foot steps, the standard deviation of all the left foot isolated steps, the standard deviation of all isolated steps of both feet, and the left and right foot average difference. Thus, this results in 84 extracted features in this category.
     \item[1-foot COP trajectory analysis] The COP trajectory was computed for each stance phase of each isolated step. First, the following 13 parameters were extracted: the minimum and maximum values on x and y, x and y coordinates at the double to single stance and single to double stance points, x coordinates of COP at the y coordinates of the center midfoot and center forefoot sensors, respectively; the range of variations on x and y; and the center of pressure excursion index, calculated as the ratio of COP trajectory excursion on the distance between the lateral and medial forefoot sensors. Second, the four following data features were calculated for each trial and each of the 13 parameters: the average of all the left foot isolated steps, the standard deviation of all the left foot isolated steps,the standard deviation of all isolated steps of both feet, and the left and right foot average difference. This category included 52 extracted features.
     \item[Gait phase analysis] The following two parameters were computed for each isolated step: stance phase duration and percentage of double support duration relative to the whole stance phase. Then, the following four features were extracted for each trial and each of the two parameters: average of all the steps from the left foot, standard deviation of all the steps from the left foot, the standard deviation of all isolated steps of both feet, and the left and right foot average difference. This subcategory includes a total of 8 extracted features.
     \item[Wavelet analysis] For each stance phase of each isolated step, the envelope of the 7-sensor of the left foot was computed. This category of features is based on the characteristics of the two waves, which characterize the plantar pressure pattern during the stance phase. First, the following 15 parameters were computed: the distance between the first and second peaks, height of the first peak, height of the second peak, height of valley, the difference between the heights of the peaks, ratio of the height of the first peak to one of the valleys, ratio of the height of the second peak to one of the valleys, difference between these two ratios, width of the first peak, width of second peaks, difference between these two widths, slope rate from the starting point of the stance phase to the first peak, slope rate from the first peak to valley, slope rate from valley to the second peak, slope rate from the second peak to the endpoint of stance phase. Second, the average and standard deviation of all the steps from the left foot were calculated, resulting in the extraction of two features for 15 parameters. This category included 30 extracted features.
 \end{description}
 
-Lastly, random forest models were trained to classify the frail from the healthy using scikit-learn. The training procedure was set so that each forest model was composed of 200 decision trees. Each tree is built by successfully splitting its nodes until the Gini impurity score equals zero until all data points in the leaf nodes correspond to the same class.
+Lastly, random forest models were trained to classify the frail from the healthy using scikit-learn. The training procedure was set so that each forest model was composed of 200 decision trees. Each tree is built by successfully splitting its nodes until the Gini impurity score equals zero and until all data points in the leaf nodes correspond to the same class.
 Models showed low classification performances (average balanced accuracy: 0.57±0.05, weighted F1-score: 0.556±0.034).
 Then, the models were validated using a 5-fold cross-validation procedure.  Alternatively, random forest models were constructed and tested using a nested cross-validation procedure. 
 The random forest classifiers showed an average balanced accuracy of 0.75±0.04 and an average weighted F1-score of 0.77±0.03 for the recognition of frail vs. non-frail subjects.
 
 \subsection{STM32 wearable device}
 A novel approach was proposed by Andò et al \cite{PosturalClasses}. A wearable sensor platform was deployed using STM32 components, which allow for the introduction of an AI Core to detect postural movements in real time. The authors differentiated between four different postures, starting from stable to unstable. 
-A limitation of this study is its data acquisition. The movements are simulated through the use of a mannequin, which is personally moved to emulate human movements. A better approach would have been the participation of real older adults, and study their own movements as they wore the device. The data is acquired using a tri-axial accelerometer, positioned on what would be the chest area of a real individual. 
+A limitation of this study is its data acquisition. The movements are simulated through the use of a mannequin, which is personally moved to emulate human movements. A better approach would have been the participation of real older adults and study their own movements as they wore the device. The data is acquired using a tri-axial accelerometer, positioned on what would be the chest area of a real individual. 
 The main features extracted for the classification task are:
 \begin{enumerate}
     \itemsep0cm 
@@ -78,14 +78,14 @@ The main features extracted for the classification task are:
 \end{enumerate}
 These features embed information related to the distance between the sensor and the hips of the subject, and the distance between the sensor and the ground. 
 
-The adopted classification strategy is comprised of the simplest architecture available, a Multi-Layer-Perceptron.
+The adopted classification strategy is comprised of the simplest architecture available, a Multi-Layer-Perceptron, which is said to achieve 99\% accuracy on the simulated movements.
 
 \subsection{Gait Heat Maps and CNNs}
 A different approach was suggested by Brome et al \cite{CycloStationary}. Instead of transforming the data to obtain meaningful features to feed to a machine learning algorithm, the authors decided to encode the information about the gait of the patients analyzing the gait as a cyclostationary process, whose statistical properties repeat over a certain period.
 The data was collected through insoles inserted into special shoes which recorded two pressure points (heel and toes) for each foot. This data was later pre-processed both in frequency and in time so that the entire data was held within the cyclic frequencies associated with the characteristic cycles of the signal. 
 The information about the spectral correlation function, i.e. a function that determines the correlation between two frequencies components of the signals with respect to their frequency difference, was then used to create the heat maps where brighter colors where associated with higher values of the function. The image was then fed to a Convolutional Neural Network, which was able to distinguish between fallers and non - fallers reading the spatial information encoded in the images.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
     \centering
     \includegraphics[width = 0.9\textwidth]{images/SOAheatmap.png}
     \caption{Example of heatmaps generated by the pre - processing}
@@ -93,10 +93,10 @@ The information about the spectral correlation function, i.e. a function that de
 \end{figure}
 
 \subsection{Dual Task Timed Up and Go for Fall Risk Assessment}
-A take on the problem of fall risk assessment was proposed by \cite{ParkinsonCupOWater}. The analysis is based on the observation that mostly every study that uses insoles to detect the risk of falling, have their subjects only perform the activity of walking when capturing the data. The author suggest that the individual's gait changes when distracted, such as performing a second task while moving. 
+A take on the problem of fall risk assessment was proposed by \cite{ParkinsonCupOWater}. The analysis is based on the observation that mostly every study that uses insoles to detect the risk of falling have their subjects only perform the activity of walking when capturing the data. The author suggest that the individual's gait changes when distracted, such as performing a second task while moving. 
 Thus, the experiment carried out was comprised of two tasks: first, the patient had to walk 23ft ($\sim$ 7 meters) at their normal pace; second, they were asked to repeat the first task but holding a cup of water in their hand. This ensured that the subject would be focused on not dropping the water.
 The data was recorded using insoles and a couple of accelerometers positioned on the heel and first metatarsal area. 
-From the data acquired with the sensors, gait phases and parameters (such as symmetry) are extracted, with a total of 63 gait features and 864 accelerometer features to use to detect the risk of a fall. After determining the most important features, the authors tested random forest classifiers, support vectors machine and k nearest neighbors.
+From the data acquired with the sensors, gait phases and parameters (such as symmetry) are extracted, with a total of 63 gait features and 864 accelerometer features used to detect the risk of a fall. After determining the most important features, the authors tested Random Forest classifiers, Support Vectors Machine and K - Nearest Neighbors.
 The results show that the Parkinson's Disease patients change their stride symmetry in task 2, a change that is not seen with Control Group subjects.
 Moreover, although the gait features did not differ much, the accelerometers features did, showing completely different directions. A classification using both gait and accelerometer features shows that the latter is more significant in differentiating healthy from Parkinson's patients, with an increased accuracy when considering the data coming from Task 2.
 
@@ -110,16 +110,17 @@ Instead, the seconds necessary to complete all of the variations of the TUG test
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data Availability}
-A common problem in applications involving data acquired from any sort of patient is the data availability. Since new systems aim at improving the quality of therapies, make them easily accessible, or help professionals in their everyday activities, these objectives need data directly acquired from those affected to define and create systems that work in the correct way. This involves problems related to the privacy of the patients who make their information accessible to only the part that expressively asked for the data. This usually comes with a (rightful) prohibition of distribution of the fore mentioned data, which usually includes private information about the patients involved. The downside is a limitation of the progress of the research. 
+A common problem in applications involving data acquired from any sort of patient is the data availability. Since new systems aim at improving the quality of therapies, make them easily accessible, or help professionals in their everyday activities, these objectives need data directly acquired from those affected to define and create systems that work in the correct way. This involves problems related to the privacy of the patients who make their information accessible only to the researchers that expressively asked for the data. This usually comes with a (rightful) prohibition of distribution of the fore mentioned data, which usually includes private information about the patients involved. The downside is a limitation of the progress of the research. 
 A few public datasets containing the anonymized data are available for everyone to use; other can be accessed upon request, and others are not publicly available. The focus of this thesis revolves around data that has not been processed prior to the release of the dataset to the scientific community. This information is referred to as raw data.
 
 
 \subsection{Public Datasets}
-A first public dataset is \textit{PlantPre} \cite{PlantPre}, comprised of data comimg from 2-3 minutes of plantar pressure data from a total of 48 elderly people, along with their Berg Balance Scale score as their falling risk labels. The test were conducted in the First Affiliated Hospital of Jinan University (Guangzhou Overseas Chinese Hospital).The content of the experiment mainly includes three parts: 
+One public dataset is \textit{PlantPre} \cite{PlantPre}, comprised of data coming from 2-3 minutes of plantar pressure sensors from a total of 48 elderly people, along with their Berg Balance Scale score as their falling risk labels. The test were conducted in the First Affiliated Hospital of Jinan University (Guangzhou Overseas Chinese Hospital).
+The content of the experiment mainly includes three parts: 
 \begin{description}
     \item[Personal Health Information] information included subjects’ sex, age, height and weight, history of fall, past medical history, drug use, exercise frequency and home life status;
     \item[Berg Balance Scale Test] Before collecting plantar pressure, clinical doctors conducted the Berg Balance Scale on the elderly to evaluate their postural control and stability: subjects with a total score of less than 40 were labelled as high falling risk, while subjects with a total score equal to and more than 40 were classified as low falling risk;
-    \item[Walking Experiment] plantar pressure monitoring shoes were used to collect the walking data associated to the subject. The monitoring shoes collected the plantar pressure data at a frequency of 20Hz, recording 8 pressure points per foot. After adapting to the shoes, the subjects walked in the hospital corridor at a comfortable speed for 2-3 minutes accompanied by the experimenter. The data was sent to an application through bluetooth. The unit of measure is Pascal.
+    \item[Walking Experiment] Plantar pressure monitoring shoes were used to collect the walking data associated to the subject. The monitoring shoes collected the plantar pressures at a frequency of 20Hz, recording 8 pressure points per foot. After adapting to the shoes, the subjects walked in the hospital corridor at a comfortable speed for 2-3 minutes accompanied by the experimenter. The data was sent to an application through bluetooth. The unit of measure is Pascal.
 \end{description}
 The three-axis accelerometer model was LIS3DHTR (STMicroelectronics, Switzerland).
 
@@ -134,7 +135,7 @@ The three-axis accelerometer model was LIS3DHTR (STMicroelectronics, Switzerland
 %vedi altri dataset linkati
 
 \subsection{Datasets available upon request}
-A first dataset available upon request is \textit{The Smart Insole Dataset} \cite{TheSmartInsoleDataset}. This dataset is comprised of raw data coming from a pair of pressure sensors insoles.
+One dataset available upon request is \textit{The Smart Insole Dataset} \cite{TheSmartInsoleDataset}. This dataset is comprised of raw data coming from a pair of pressure sensors insoles.
 The participants, 29 persons of different age groups and health conditions (healthy adults, elderly, Parkinson’s disease patients), performed two sets of tests. The first group is the control group, in which healthy adults aged between 20–59 years were included; the second group includes elderly citizens, in which people above the age of 60 years were included; the third group relates to Parkinson’s disease patients, irrespective of their age. 
 The data is acquired from \textit{Moticon SCIENCE} insole sensors, with a sampling rate of 100Hz. The total number of features is 50 (with 25 coming from the right foot and 25 coming from the left foot), plus a timestamp. The raw data is measured in: 
 \begin{itemize}
@@ -165,25 +166,24 @@ The labeling of the recorded data was performed following a two-level annotation
 The current state of the art has limitations regarding the availability of the data and the means used to analyse the data.
 
 The principal limitation relies in data acquisition. Most of the studies are based on a personal acquisition of the data that is later not shared nor publicly available. This leads to two consequences: first, the results of the analysis proposed cannot be reproduced to assess their correctness and validity; second, this limits the advancement in the research as the data is not available.
-Another limitation regarding the data is based on the amount of the data that is usually acquired for those studies, as the number of patients is usually very limited to a 100, or most likely, less than 50, making the results of the research less valuable.
+Another limitation regarding the data is based on the amount of information that is usually acquired for those studies, as the number of patients is usually very limited to a 100, or most likely, less than 50, making the results of the research less valuable.
 
 Another limitation of the long term monitoring studies is that patients are not always willing or available to repeat tests after six, nine, or twelve months, making the available data even fewer. 
 
-The limitation regarding the machine learning algorithms used to analyze the data is then related to the complexity of the algorithm to use, since it is necessary that the models chosen can be trained using very few samples. 
+The limitation regarding the machine learning algorithms used to analyze the data is then related to the complexity of the algorithm to use, since it is necessary that the models chosen can be trained using very few samples. Moreover, they need to be interpretable to b valuable for the medical staff.
 
 Last but not least, the results greatly depend on the quality of the wearable sensors employed in the studies, as higher quality sensors can lead to better analysis, whereas lower quality sensors can lead to samples with many missing data points.
 
-\section{Emerging Trends}
+\section{Emerging Trends and Conclusion}
 %This section describes any new trends or research directions that are emerging in the field. This may include the introduction of novel technologies, methodologies, or conceptual approaches.
 
-As the literature review suggests, the machine learning approaches constitute the emerging trends on this topic, as a few years ago the main analysis was comprised of the analytical filtering and considerations made regarding the signals themselves. Additionally, the results of the Fall Risk Tests were used to assess the gait imbalance and asymmetries of the patients. 
+As the literature review suggests, the machine learning approaches constitute the emerging trends on this topic, as a few years ago the main analysis was comprised of the analytical filtering and considerations made regarding the signals themselves. 
+Additionally, the results of the Fall Risk Tests were used to assess the gait imbalance and asymmetries of the patients, whereas with the use of different methodologies, these tests are used in a clinical setting but not in a data analysis one.
+Most of the time, the results from one of the tests is used as only one additional feature of the many available that characterize a subject, since with the use of sensors it is possible to acquire direct information about the gait of the patient, which has been demonstrated to lead to better results in classification when fed to a machine learning algorithm.
 
+In conclusion, wearable sensors and pressure insoles have emerged as valuable tools for gathering data related to gait and balance. Various approaches have been explored to analyze this data and predict the risk of falls among elderly individuals and those with specific health conditions. These approaches encompass a range of methodologies and techniques, from traditional statistical analyses to machine learning and deep learning models.
 
-\section{Conclusion}
-In the realm of fall risk assessment, wearable sensors and pressure insoles have emerged as valuable tools for gathering data related to gait and balance. Various approaches have been explored to analyze this data and predict the risk of falls among elderly individuals and those with specific health conditions. These approaches encompass a range of methodologies and techniques, from traditional statistical analyses to machine learning and deep learning models.
+The selection of relevant features from the data is a crucial step, with feature extraction being favored over machine learning alone in many studies. 
+The datasets used typically include raw data, often collected from a diverse group of participants, including healthy individuals, the elderly, and patients with specific medical conditions.
 
-Several noteworthy findings and strategies have been highlighted in the literature. Notably, the use of accelerometers and gyroscopes as common sensors for capturing gait data, particularly when positioned in the lumbar and waist areas, has been prevalent. The selection of relevant features from the data is a crucial step, with feature extraction being favored over machine learning alone in many studies. Moreover, different tasks, such as the Tinetti Scale assessment and dual-task walking, have been employed to assess fall risk.
-
-Several public datasets and requestable datasets have become valuable resources for researchers in this field, enabling them to develop and validate their models and techniques. These datasets typically include raw data, often collected from a diverse group of participants, including healthy individuals, the elderly, and patients with specific medical conditions.
-
-In conclusion, the research on fall risk assessment using wearable sensors and pressure insoles is advancing rapidly. This area has the potential to significantly improve the quality of care for individuals at risk of falling by enabling early detection and intervention. However, challenges related to data privacy and availability need to be addressed to facilitate further progress in this field. Researchers and healthcare professionals continue to explore innovative approaches to enhance fall risk assessment, ultimately contributing to better outcomes for individuals at risk of falls.
+To sum up, the research on fall risk assessment using area has the potential to significantly improve the quality of care for individuals at risk of falling by enabling early detection and intervention. However, challenges related to data privacy and availability need to be addressed to facilitate further progress in this field. 
