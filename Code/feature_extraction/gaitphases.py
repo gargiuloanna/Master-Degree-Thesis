@@ -131,10 +131,10 @@ def gait_phases(signal, dn_complete, side = "Left"):
 
 if __name__ == '__main__':
 
-  for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/SmartInsole/'):
+  for root, dirs, files in os.walk('/Code/data/SmartInsole/'):
     for file in files:
       print("Preprocessing file ", file)
-      if not os.path.exists('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/gaitphasesplots/' + file.split(".")[0] + " - left.png") and not file== "s006_1slow1.xlsx" and not file == "s013_2tug1.xlsx" and not file == "s013_2tug2.xlsx":
+      if not os.path.exists('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/gaitphasesplots/' + file.split(".")[0] + " - left.png") and not file== "s006_1slow1.xlsx" and not file == "s013_2tug1.xlsx" and not file == "s013_2tug2.xlsx":
         dc_complete = pd.read_excel(root + '/' + file)
         dn_complete = pd.read_excel(root + '/' + file)
 
@@ -155,7 +155,7 @@ if __name__ == '__main__':
         visualization(dn_complete, dc_complete, file)
 
         print("Saving")
-        #dn_complete.to_excel('C:/Users/annin/PycharmProjects/Tesi/Data/gaitphases/' +  file)
+        #dn_complete.to_excel('C:/Users/annin/PycharmProjects/Tesi/data/gaitphases/' +  file)
       else:
         print("Already done ", file)
 

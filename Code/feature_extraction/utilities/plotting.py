@@ -33,7 +33,7 @@ def plots(signal, dc_signal, dn_complete, dc_complete, hes, tof, fof, her, peaks
   ax2.set_ylabel("Signal")
   ax2.legend()
 
-  fig.savefig("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/gaitphasesplots/" + file.split(".")[0] +  ' - '+ side + '.png')
+  fig.savefig("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/gaitphasesplots/" + file.split(".")[0] +  ' - '+ side + '.png')
   plt.close()
 
 def visualization(dn_complete, dc_complete, file):

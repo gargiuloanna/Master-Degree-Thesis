@@ -3,18 +3,18 @@ import os
 
 def concat():
     frames = []
-    for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete'):
+    for root, dirs, files in os.walk('/Code/data/features_complete'):
         for file in files:
             print(file)
-            frames.append(pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete/' + file))
+            frames.append(pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/features_complete/' + file))
 
     result = pd.concat(frames, ignore_index=True)
     result.drop('Unnamed: 0', axis=1, inplace=True)
-    result.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset.xlsx')
+    result.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/Dataset.xlsx')
     return result
 
 def mean_values():
-    result = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset.xlsx')
+    result = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/Dataset.xlsx')
     result.drop('Unnamed: 0', axis=1, inplace=True)
 
     el_norm = [result['Patient'][i].startswith('el') and result['Exercise'][i].startswith('1norm') for i in range(0, len(result))]

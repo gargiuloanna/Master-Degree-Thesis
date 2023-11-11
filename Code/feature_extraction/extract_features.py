@@ -185,7 +185,7 @@ def features(dn_complete, name):
     # Feature insert
 
     features = pd.DataFrame()
-    old_features = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/fixed/' +  name)
+    old_features = pd.read_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/fixed/' +  name)
 
     features.loc[0, 'Patient'] = patient
     features.loc[0, 'Exercise'] = task
@@ -420,7 +420,7 @@ def features(dn_complete, name):
     '''
 
     feat = features.copy()
-    feat.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_changed/' + name)
+    feat.to_excel('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/data/features_changed/' + name)
 
 
 """Execute"""
@@ -430,14 +430,14 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-for root, dirs, files in os.walk('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete/'):
+for root, dirs, files in os.walk('/Code/data/features_complete/'):
     if len(files) != 0:
         folder = root
         for file in files:
             patient = file.split("_")[0]
             task = file.split("_")[1].split(".")[0]
             name = patient + ' - ' + task + '.xlsx'
-            if not os.path.exists(os.path.join('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/features_complete/', name)):
+            if not os.path.exists(os.path.join('/Code/data/features_complete/', name)):
                 print("Examining ", folder, file)
                 dn_complete = pd.read_excel(folder + '/' + file)
 
