@@ -28,3 +28,4 @@ def remove_outliers(df):
             df.drop(i, axis = 0, inplace = True)
 
     return df
+
