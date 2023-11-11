@@ -1,0 +1,45 @@
+
+This chapter will focus on the comparison of the results presented in chapter 4 to determine common features used by the algorithm for both the gait analysis and fall prevention.
+
+
+\section{Gait Analysis}
+
+Each and every model reported in chapter 4 classifies the samples in a different way. This dissimilarity leads to the use of different features to determine the class of each samples, but for a clinical use of the achieved results there have to be common characteristics exploited by the models that can be used by the medical staff.
+
+Random Forest and SVM share their first most important feature, which is the Skewness of the Angular Acceleration along the Y axis. This feature is also a part of the 12 most important features found using KNN.
+The takeway from this analysis is that all of the models tend to use the \textbf{Skewness} and \textbf{Kurtosis} of the \textbf{linear} and \textbf{angular accelerations} in the X, Y and Z axis and of the \textbf{center of pressure along} the X and Y axis.
+
+Skewness is a measure of symmetry, or the lack of symmetry. It expresses the difference of the used distribution compared to the normal distribution (of skewness 0). Two distributions can share the same average and standard deviation, but have different skewness. Skewness encapsulates the asymmetry of the tails of the distribution, representing whether there are more samples distributed below the mode of the distribution (negative skewness), or above the mode (positive skewness) of the distribution.
+
+Kurtosis, instead, is a measure of how many samples are distributed along the tails of the distribution. Two distributions can share the same average, standard deviation, and skewness, but have different kurtosis.
+If a distribution has wider tails (less values along the average) it means that it has more outliers compared to a distribution who has thinner and shorter tails (more values along the average). Kurtosis is usually evaluated as a measure of a \enquote{excess} kurtosis compared to the normal distribution. If the tails are longer compared to a normal distribution, it has a positive kurtosis. Instead, if the distibution has shorter tails compared to the normal distribution, it has a negative kurtosis.
+
+These general ideas are shown in Fig. \ref{fig:SKEWKURT}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter5/SKEWKURT.png}
+    \caption{Visualization of Skewness (left) and Kurtosis (right)}
+    \label{fig:SKEWKURT}
+\end{figure}
+
+
+A visualization of the motivation behind the choice of those features as most important is shown in Fig. \ref{fig:Example_skew} and Fig. \ref{fig:Example_KURTpng} . As one can see, the distributions of the Skewness of the Angular Acceleration along the Y axis, and the Acceleration of the X axis are different between the three classes, therefore are useful to discriminate them. The same stands for the Kurtosis of the Acceleration on the X axis for both the left and right leg.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter5/Example_skew.png}
+    \caption{Visualization of Skewness of the Angular Acceleration on the Y axis(left) and Linear Acceleration on the X axis (right).
+    The three classes as distinguished as so: Elderly (in green), Parkinson's Disease Patients (in yellow) and Adults (in blue).}
+    \label{fig:Example_skew}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter5/Example_KURTpng.png}
+    \caption{Visualization of Kurtosis of the Linear Acceleration on the X axis on the left foot (left) and on the right foot (right).
+    The three classes as distinguished as so: Elderly (in green), Parkinson's Disease Patients (in yellow) and Adults (in blue).}
+    \label{fig:Example_KURTpng}
+\end{figure}
+
+
+\section{Fall Prediction}
+

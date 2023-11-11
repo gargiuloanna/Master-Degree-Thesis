@@ -1,0 +1,238 @@
+This chapter will focus on the presentation of the experimental pipeline followed to compute the results of the algorithm used for the classification tasks, as well as a discussion of the results obtained by each individual algorithm previously described in Chapter 3. 
+
+
+The chapter is split into two main sections: the results associated with the gait analysis, and the results associated with the fall prediction objective.
+
+
+But first, the Grid Search approach which has been used for all algorithms in both sections is described.
+
+
+\section{Grid Search}
+Throughout the whole experimentation the models have been first fine-tuned using Scikit Learn's Grid Search. This method executes an exhaustive search over a set of specified parameter values for a chosen estimator. The aim is to find the set of predefined hyperparameters that give out the best performance on the validation set.
+More specifically, the Grid Search used is based on cross validation. It splits the data received in input into a number of folds specified as a parameter. For this application, the value chosen is 10 folds, picked among the data coming from the training set of the application.
+The training is made of 70\% of the available samples, whereas the other 30\% is left for testing purposes, making sure to have the same proportion of samples among classes.
+
+The set of hyperparameters to test differs among all the trails executed, as different algorithms require different hyperparameters. For each one, the set of parameters tested is reported, as well as a description of each variable.
+
+\section{Gait Analysis}
+For the gait analysis task, three different algorithms are compared: Random Forest, Support Vector Classifier, and K - Nearest Neighbors Classifier.
+The aim of the gait analysis performed is to identify algorithms that are able to distinguish between three classes of samples (Elderly, Adults, and Parkinson's Patients) determining what features were mostly used by these algorithms to perform the classification, and their relevance in the medical field. 
+
+\subsection{Random Forest}
+The first algorithm tested is Random Forest. 
+To find the best subest of hyperparameters for the problem, Scikit Learn's GridSearch has been incorporated to test for different combinations of parameters.
+Random Forest is characterized by:
+\begin{description}
+    \item[Number of Estimators] It corresponds to the number of trees in the forest. With GridSearch the values tested are 70, 100, 110, 120, 130, 140, 150;
+    \item[Criterion] used to split a tree node. With GridSearch the values tested are \textit{gini} and \textit{entropy};
+    \item[Maximum depth of the tree] With GridSearch the values tested are 3, 4, 5, 6, 7, 8;
+    \item[The minimum number of samples required to split an internal node]  With GridSearch the values tested are 2, 5, 10, 20;
+    \item[The minimum number of samples required to be at a leaf node]  With GridSearch the values tested are 0.1, 0.5, 1, 5, 10, 20;
+    \item[Maximum number of features]  to consider when looking for the best split. With GridSearch the values tested are the square root and the logarithm of the features.
+\end{description}
+
+The best resulting tree is characterized by having 70 estimators, the nodes are split based on criterion \enquote{gini}, with the minimum number of samples required to split an internal node equal to 2, and the minimum number of samples to be a leaf node equal to 1. The maximum depth is 3 and the maximum number of features chosen are equal to the square root of their original number.
+
+Since Random Forest is based on random decisions, the performance of the algorithm is tested using 100 different seeds, to evaluate the robustness of the obtained results. The outcome is shown below in Tab \ref{tab:RF_Seeds}.
+\input{tables/chapter4/randomforestseeds}
+
+The best tree found is the one with seed \textit{5940440}, which displays 81.6\% balanced accuracy for the Out of Bag Samples, and \textbf{86.1\%} balanced accuracy on the test set.
+The confusion matrix of the algorithm is shown in Fig. \ref{fig:CM_Best Tree_GA}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/chapter4/CM_Best Tree_GA.png}
+    \caption{Confusion Matrix of the Best Tree with seed  \textit{5940440}}
+    \label{fig:CM_Best Tree_GA}
+\end{figure}
+
+The information gathered from the confusion matrix is that five elderly patients get mistakenly classified as adults, whereas two adults get mistaken for being elderly. This is most likely due to the age and health conditions of the patients. Most elderly are still healthy, and their trials look exactly the same as the one taken by the adults. Even upon human inspection the samples could be classified incorrectly as they look similar. This is 
+confirmed when looking at the samples that get mistaken: the elderly samples confused as adults were the Walk and Turn tests performed at a higher velocity compared to their normal speed, and, the adults confused as elderly were either on the higher age range (above 50) or were confused as they performed their Slow Walk and Turn trials.
+
+
+The only mistake made by the algorithm on the Parkinson's class is classifying one the patients as elderly. This error can still be explained when considering that the elderly patients are closer in age to those affected by Parkinson's, and not all Parkinson's patients are affected in the same way by the disease, as some are still in early stages. This is the case of the patient PD006, which is the one wrongly classified by the algorithm.
+
+
+Lastly, as the focus of the analysis is not the \enquote{black box} classification of the samples, one rather important consideration has to be made regarding the features that the algorithm uses the most to distinguish between the three classes.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter4/BP_Best Tree_GA.png}
+    \caption{Bar Plot displaying the 15 most important features of the Best Tree with seed  \textit{5940440}}
+    \label{fig:BP_Best Tree_GA}
+\end{figure}
+
+
+In Fig. \ref{fig:BP_Best Tree_GA} the 15 most important features used by the algorithm are shown, in decreasing order.
+
+As one can see, the algorithm uses mostly the statistical features associated to the accelerations (both linear and angular) and the center of pressure along the X and Y axis, in particular, it considers the Skewness as the most important feature.
+The Heel and Toe Ratio features are a measure of the symmetry of the heel pressure and toe pressure when both feet are compared.
+
+%mancherebbe il one vs rest
+\subsection{Support Vector Machine}
+The second algorithm tested is Support Vector Classifier (SVC). 
+To find the best subest of hyperparameters for the problem, Scikit Learn's GridSearch has been incorporated to test for different combinations of parameters.
+The algorithm is characterized by:
+\begin{description}
+    \item[C] It is a regularization parameter, applying the squared l2 penalty with a strength which is inversely proportional to C. With GridSearch the values tested are 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.65, 0.7,0.75, 0.8, 0.9, 1.0, 1.5, 2.0;
+    \item[Kernel] It specifies the kernel used to perform the kernel trick. With GridSearch the values tested are \textit{linear, polynomial, rbf and sigmoid};
+    \item[Degree] It corresponds to the degree of the polynomial when the kernel chosen is polynomial, otherwise it is ignored. With GridSearch the values tested are = 1, 2, 3, 5, 7, 8, 9, 10;
+    \item[Indepent term of the kernel function]  With GridSearch the values tested are 2, 5, 10, 20;
+    \item[Decision Function Shape] Since this is a multi-class classification, the boundaries of the classes can be built using two different approaches. With GridSearch the values tested are \textit{one vs rest} and \textit{one vs one}.
+\end{description}
+
+The best Support Vector Classifier has a Radial Basis Function (rbf) kernel, with C equal to 2 and the decision function has a one vs one shape.
+
+Since this kind of classifier is deterministic, there was no need to test its performance using different seeds, as these do not influence the final result. The classification achieved is only based n the position of the sample based on the value of the features in the hyperspace created by the kernel.
+
+
+The model achieves \textbf{89.2\%} balanced accuracy on the test set. The confusion matrix is displayed in Fig. \ref{fig:CM_SVM_GA}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter4/CM_SVM_GA.png}
+    \caption{Confusion Matrix of the SV Classifier}
+    \label{fig:CM_SVM_GA}
+\end{figure}
+
+As for the Random Forest Classifier, SVC makes similar errors, confusing Adults and Elderly Patients as one another. 
+
+The only difference is the elderly patient classified as a Parkinson's Patient. Upon further inspection, the wrongly classified sample is the first Walk and Turn test performed at a slow velocity by patient EL002. To recall, the second trial of this patient was considered an outlier, therefore it is safe to assume that this second test also slightly differs from the other samples in its class.
+
+
+Instead, the elderly samples confused as adults were the Walk and Turn tests performed at a higher velocity compared to their normal speed, and, lastly, the adults confused as elderly were either on the higher age range (above 50) or were confused as they performed their slow Walk and Turn trials.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter4/BP_SVM_GA.png}
+    \caption{Bar Plot displaying the 15 most important features of the SV Classifier}
+    \label{fig:BP_SVM_GA}
+\end{figure}
+
+The similarities with the Random Forest algorithm can also be seen when looking at the most important features used by the model to classify the samples. As previously highlighted, the skewness and the kurtosis features associated with the linear and angular accelerations are the most important, even more than the 15 features displayed for random forest.
+
+\subsection{K Nearest Neighbors}
+The thrid and last algorithm tested is K - Nearest Neighbors (KNN). 
+To find the best subest of hyperparameters for the problem, Scikit Learn's GridSearch has been incorporated to test for different combinations of parameters.
+KNN is characterized by:
+\begin{description}
+    \item[Number of Neighbors] used to associate a sample to a class. With GridSearch the values tested are 1, 2, 3, 4, 5, 6,7 ,8 ,9 , 10, 11,12;
+    \item[Weight Function] used when computing the importance, i.e. the weight, of the nearest samples in the classification task. With GridSearch the values tested are \textit{uniform} and \textit{distance}, to weight all points in the neighborhood equally and to weight points by the inverse of their distance, respectively;
+    \item[Algorithm used to compute the nearest neighbors] With GridSearch the values tested are \textit{automatic}, \textit{ball tree}, \textit{kd tree} and \textit{brute};
+    \item[Metric]  to use for the distance computation. With GridSearch only \textit{minkowski} is tested;
+    \item[Power parameter for the Minkowski metric]  With GridSearch the values tested are 1, 2, 4, 6, 9.
+\end{description}
+
+The best KNN model chooses the class to assign the sample looking at one neighbor with uniform weight. For the power parameter of the Minkowski metric, the best value is 2.
+
+Also in this case, the classifier is deterministic, therefore there is no need to test its performance using different seeds. 
+
+The model achieves \textbf{90\%} balanced accuracy on the test set. The confusion matrix for this particular model is shown in Fig. \ref{fig:CM_KNN_GA}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter4/CM_KNN_GA.png}
+    \caption{Confusion Matrix of the KNN Classifier}
+    \label{fig:CM_KNN_GA}
+\end{figure}
+
+
+Compared to Random Forest and SVC, KNN makes similar mistakes, with the exception that a couple of samples are misclassified although they should not. An example is patient S004 misclassified as an elderly despite the trial being a \textit{fast} Walk and Turn, and their age being 38. The only explanation for this misclassification can be found only considering that the algorithm works by looking at one single nearest neighbor, and that this sample is probably located near an elderly.
+
+Since this algorithm does not provide any importance for the given features, to get an idea of the most relevant ones KNN is coupled with Scikit Learn's Sequential Feature Selection. 
+
+This approach is designed to select only the most N (hyperparameter) features from the original set, choosing in each and every iteration the feature to add to the new reduced set based on a predefined criteria.
+For instance, a possible choice could be a threshold on the improvement of the performance of the algorithm.
+
+Since the aim in this case is to find the importance of all features, the pipeline is run so that each trial includes a new feature until all the features from the original set were included. 
+
+Using this approach, three different accuracy values were reached by the algorithm once it considered a subset of the features. The results are shown in Tab. \ref{tab:KNN_Selection} below.
+\input{tables/chapter4/knn}
+
+The 12 most important features include: Left Acceleration X Skewness and Kurtosis, Toe pressure Skewness, Angular Y Skewness, Right Acceleration Z Skewness, Right COP X Skewness, Left Total Force Kurtosis, Right Walk Ratio (not present in the 11 feature case), Normalized Left Stride Length and Normalized Right Step Frequency.
+
+
+\section{Fall Prediction}
+
+For the fall prediction task, two different algorithms are compared: Random Forest, Support Vector Classifier.
+The aim of the fall prediction performed is to identify the  most useful features in determining whether a patient is at risk of falling or not. Thus, the performance of the algorithms is still reported, but the aim of this task is not achieving the best accuracy on the samples, but rather having a meaningful analysis that could help the clinical assessment of patients at risk.
+
+
+For this task, Grid Search is still employed with the same characteristics defined for gait analysis to gather the best hyperparameters to use for the algorithms, but the samples are later split differently compared to the first task.
+
+
+As stated in chapter 3, there is no differentiation between training samples and test samples, due to the very few patients that are categorized as at risk. These include: EL001, EL002, EL007, EL009, PD002, PD006, PD007, PD009, S005, whereas PD003, PD005 and PD008 are removed as their labels for the test were probably erroneous. Moreover, only the TUG tests performed by each patient are used to comprise the dataset, for a total of 51 samples.
+
+Therefore, instead of splitting the dataset into train and test set, the samples are used to train and validate the models using Scikit Learn's StratifiedKFold for cross - validation made up of three folds. This means that two folds are used for training and the other is used to validate. 
+
+\subsection{Random Forest}
+The first algorithm tested is Random Forest. 
+To find the best subest of hyperparameters for the problem, Scikit Learn's GridSearch has been incorporated to test for different combinations of parameters.
+Random Forest is characterized by:
+\begin{description}
+    \item[Number of Estimators] It corresponds to the number of trees in the forest. With GridSearch the values tested are 70, 100, 110, 120, 130, 140, 150;
+    \item[Criterion] used to split a tree node. With GridSearch the values tested are \textit{gini} and \textit{entropy};
+    \item[Maximum depth of the tree] With GridSearch the values tested are 3, 4, 5, 6, 7, 8;
+    \item[The minimum number of samples required to split an internal node]  With GridSearch the values tested are 2, 5, 10, 20;
+    \item[The minimum number of samples required to be at a leaf node]  With GridSearch the values tested are 0.1, 0.5, 1, 5, 10, 20;
+    \item[Maximum number of features]  to consider when looking for the best split. With GridSearch the values tested are the square root and the logarithm of the features.
+\end{description}
+
+The best resulting tree is characterized by having 100 estimators, the nodes are split based on entropy, with the minimum number of samples required to split an internal node equal to 10, and the minimum number of samples to be a leaf node equal to 1. The maximum depth is 8 and the maximum number of features chosen are equal to the square root of their original number.
+
+Since Random Forest is based on random decisions, the performance of the algorithm is tested using 100 different seeds, to evaluate the robustness of the obtained results. The outcome is shown below in Tab \ref{tab:RF_Seeds}.
+\input{tables/chapter4/rf_seeds_cv}
+
+The best tree found is the one with seed \textit{8358684}, which displays  \textbf{91.6\%} mean balanced accuracy on the validation folds.In this case bootstraping is not enabled, so the out of bag samples are not available.
+
+To get an idea of the most important features starting from the features used to classify each run of folds, the three bar plots associated to the three most important features are displayed in Fig.
+
+
+
+In Fig. \ref{fig:BP_Best Tree_GA} the 15 most important features used by the algorithm are shown, in decreasing order.
+
+As one can see, the algorithm uses mostly the statistical features associated to the accelerations (both linear and angular) and the center of pressure along the X and Y axis, in particular, it considers the Skewness as the most important feature.
+The Heel and Toe Ratio features are a measure of the symmetry of the heel pressure and toe pressure when both feet are compared.
+
+%mancherebbe il one vs rest
+\subsection{Support Vector Machine}
+The second algorithm tested is Support Vector Classifier (SVC). 
+To find the best subest of hyperparameters for the problem, Scikit Learn's GridSearch has been incorporated to test for different combinations of parameters.
+The algorithm is characterized by:
+\begin{description}
+    \item[C] It is a regularization parameter, applying the squared l2 penalty with a strength which is inversely proportional to C. With GridSearch the values tested are 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.65, 0.7,0.75, 0.8, 0.9, 1.0, 1.5, 2.0;
+    \item[Kernel] It specifies the kernel used to perform the kernel trick. With GridSearch the values tested are \textit{linear, polynomial, rbf and sigmoid};
+    \item[Degree] It corresponds to the degree of the polynomial when the kernel chosen is polynomial, otherwise it is ignored. With GridSearch the values tested are = 1, 2, 3, 5, 7, 8, 9, 10;
+    \item[Indepent term of the kernel function]  With GridSearch the values tested are 2, 5, 10, 20;
+    \item[Decision Function Shape] Since this is a multi-class classification, the boundaries of the classes can be built using two different approaches. With GridSearch the values tested are \textit{one vs rest} and \textit{one vs one}.
+\end{description}
+
+The best Support Vector Classifier has a Radial Basis Function (rbf) kernel, with C equal to 2 and the decision function has a one vs one shape.
+
+Since this kind of classifier is deterministic, there was no need to test its performance using different seeds, as these do not influence the final result. The classification achieved is only based n the position of the sample based on the value of the features in the hyperspace created by the kernel.
+
+
+The model achieves \textbf{89.2\%} balanced accuracy on the test set. The confusion matrix is displayed in Fig. \ref{fig:CM_SVM_GA}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter4/CM_SVM_GA.png}
+    \caption{Confusion Matrix of the SV Classifier}
+    \label{fig:CM_SVM_GA}
+\end{figure}
+
+As for the Random Forest Classifier, SVC makes similar errors, confusing Adults and Elderly Patients as one another. 
+
+The only difference is the elderly patient classified as a Parkinson's Patient. Upon further inspection, the wrongly classified sample is the first Walk and Turn test performed at a slow velocity by patient EL002. To recall, the second trial of this patient was considered an outlier, therefore it is safe to assume that this second test also slightly differs from the other samples in its class.
+
+
+Instead, the elderly samples confused as adults were the Walk and Turn tests performed at a higher velocity compared to their normal speed, and, lastly, the adults confused as elderly were either on the higher age range (above 50) or were confused as they performed their slow Walk and Turn trials.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/chapter4/BP_SVM_GA.png}
+    \caption{Bar Plot displaying the 15 most important features of the SV Classifier}
+    \label{fig:BP_SVM_GA}
+\end{figure}
+
+The similarities with the Random Forest algorithm can also be seen when looking at the most important features used by the model to classify the samples. As previously highlighted, the skewness and the kurtosis features associated with the linear and angular accelerations are the most important, even more than the 15 features displayed for random forest.
