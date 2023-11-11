@@ -1,11 +1,27 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import balanced_accuracy_score, classification_report
-from Code.plotting.plots import confusion_matrix, random_forest_fimp, permutation_imp, feature_importance
+from Code.plotting.plots import permutation_imp, feature_importance
 from Code.evaluation.predict import predict_score
 from Code.preprocessing.preprocess import preprocess
 from joblib import dump
 import numpy as np
+import matplotlib.pyplot as plt
+import sklearn.metrics as skplt_m
 import os
+
+def confusion_matrix(classifier, data, labels, cmap, name = "Model_Confusion"):
+
+    lab_pred = classifier.predict(data)
+
+    plt.figure(figsize = (34,34))
+    cm = skplt_m.confusion_matrix(labels, lab_pred)
+    disp = skplt_m.ConfusionMatrixDisplay(confusion_matrix=cm, display_labels = ['At Risk', 'Not At Risk'])
+    disp.plot(cmap = cmap)
+    if not os.path.exists("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/plots/" + name):
+        os.mkdir("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/plots/" + name)
+
+    plt.savefig("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/plots/" + name +"_CONFUSION.png")
+
 if __name__ == '__main__':
 
     train, test, labeltrain, labeltest = preprocess()
@@ -21,9 +37,8 @@ if __name__ == '__main__':
     best_test['Training OOB Accuracy'] = 0.0
     best_test['Test Accuracy'] = 0.0
     for seed in seeds:
-        name = "RandomforestWholePreprocess_MEAN_ "+str(seed)
+        name = "Randomforest_seeds_gait_ " + str(seed)
 
-        #clf = RandomForestClassifier(criterion='gini', max_depth=5, max_features='sqrt', min_samples_split=0.1,min_samples_leaf=1, n_estimators=100, random_state=seed, oob_score=balanced_accuracy_score, class_weight='balanced')
 
         clf = RandomForestClassifier(criterion='entropy', max_depth=8, max_features='sqrt', min_samples_split=10,
                                  min_samples_leaf=1, n_estimators=100, random_state=seed, oob_score=balanced_accuracy_score,
@@ -49,7 +64,7 @@ if __name__ == '__main__':
         print("Training OOB Accuracy ", oob)
         print("Test Accuracy: ", test_score)
 
-        print(classification_report(labeltest, clf.predict(test),  target_names=['Elderly', 'Parkinson', 'Adults'],  digits=3, output_dict=False, zero_division='warn'))
+        print(classification_report(labeltest, clf.predict(test),  digits=3, output_dict=False, zero_division='warn'))
 
         file = open("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/logs/randomforest/randomforestseeds.txt", "a")
         file.write("\nModel " + name + '\n')
@@ -79,10 +94,9 @@ if __name__ == '__main__':
     print("[RANDOM FOREST] Model Saved")
 
     # Plots
-    confusion_matrix(clf, test, labeltest, name=name)
-    feature_importance(clf, train.columns, name=name)
-    random_forest_fimp(clf, train.columns, name=name)
-    permutation_imp(clf, test, labeltest, name=name)
+    confusion_matrix(clf, test, labeltest, 'Blues', name=name)
+    feature_importance(clf, train.columns, 'skyblue', name=name)
+    permutation_imp(clf, test, labeltest,'skyblue', name=name)
 
     # Misclassified Samples
     y_test = np.asarray(labeltest)

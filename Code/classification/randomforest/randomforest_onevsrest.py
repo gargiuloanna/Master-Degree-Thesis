@@ -7,9 +7,9 @@ from Code.plotting.plots import feature_importance
 if __name__ == '__main__':
 
     train, test, labeltrain, labeltest = preprocess()
-
+    seed = 5940440
     clf = RandomForestClassifier(criterion='entropy', max_depth=8, max_features='sqrt', min_samples_split=10,
-                                 min_samples_leaf=1, n_estimators=100, random_state=8779374, oob_score=balanced_accuracy_score,
+                                 min_samples_leaf=1, n_estimators=100, random_state=seed, oob_score=balanced_accuracy_score,
                                  class_weight='balanced')
 
     ovr = OneVsRestClassifier(clf, verbose = 51, n_jobs=-1)
@@ -18,6 +18,6 @@ if __name__ == '__main__':
     print("Test Accuracy ", ovr.score(test, labeltest))
     print("Classes ", ovr.classes_)
     #Plots
-    feature_importance(ovr.estimators_[0], train.columns,name = "randomforest/ONEVSREST_0")
-    feature_importance(ovr.estimators_[1], train.columns,name = "randomforest/ONEVSREST_1")
-    feature_importance(ovr.estimators_[2], train.columns,name = "randomforest/ONEVSREST_2")
+    feature_importance(ovr.estimators_[0], train.columns, 'skyblue', name = "randomforest/ONEVSREST_0/")
+    feature_importance(ovr.estimators_[1], train.columns, 'skyblue', name = "randomforest/ONEVSREST_1/")
+    feature_importance(ovr.estimators_[2], train.columns, 'skyblue', name = "randomforest/ONEVSREST_2/")

@@ -7,10 +7,10 @@ from joblib import dump
 
 if __name__ == '__main__':
 
-        train, test, labeltrain, labeltest =preprocess('C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/Data/Dataset-only normalized lengths.xlsx')
-        name="RandomForest_GridSearch"
-#Best random forest with params: {'criterion': 'entropy', 'max_depth': 6, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100}
-        #'criterion': 'entropy', 'max_depth': 6, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100
+        train, test, labeltrain, labeltest =preprocess()
+
+        name="RandomForest_GridSearch_gait_"
+
         print("[RANDOM FOREST] Searching best params with GridSearchCV")
 
         rdf_model = RandomForestClassifier(random_state=0,
@@ -47,7 +47,5 @@ if __name__ == '__main__':
         file.write("Train OOB Accuracy: " + str(clf.oob_score_) + '\n')
         file.write("Test Accuracy: " + str(predict_score(clf, test, labeltest)) + '\n')
         file.close()
-
-
 
 
