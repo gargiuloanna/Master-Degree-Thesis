@@ -36,7 +36,7 @@ if __name__ == '__main__':
     best_test['Test Accuracy'] = 0.0
     total_train = []
     total_test = []
-    data, labels = preprocess(file='/Code/data\Dataset-negativeselection - TUGNOSIT.xlsx')
+    data, labels = preprocess(file='/Code/data\Dataset-fallrisk - TUGNOSIT.xlsx')
 
     seeds = np.random.randint(0, 9999999, size = 100)
     for seed in seeds:
