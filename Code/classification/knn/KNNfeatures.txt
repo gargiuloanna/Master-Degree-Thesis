@@ -1,9 +1,0 @@
-'Height (cm)'
-'Left Acceleration X Skewness'
-'Right Acceleration Z Kurtosis'
-'Right COP Y Skewness'
-'Avg Left Toe Pressure Skewness' (0.95)
-'Right COP X Skewness'  (96.6)
-'Toe Ratio'(98.3)
-
-

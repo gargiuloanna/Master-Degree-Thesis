@@ -35,7 +35,7 @@ if __name__ == '__main__':
         print(clf.predict(test))
         print(list(labeltest))
         print(clf.score(test, labeltest))
-        confusion_matrix(clf, test, labeltest, name=name)
+        confusion_matrix(clf, test, labeltest, 'Greens', name=name)
 
 
 
