@@ -5,7 +5,7 @@ from Code.plotting.plots import confusion_matrix
 
 if __name__ == '__main__':
 
-        name = "knn/KNN_GS"
+        name = "knn/KNN_GS_GAITPATIENT"
         train, test, labeltrain, labeltest = preprocess()
 
         param_grid = {

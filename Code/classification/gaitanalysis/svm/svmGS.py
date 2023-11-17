@@ -2,16 +2,14 @@ import numpy as np
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from Code.evaluation.predict import predict_score
-from Code.plotting.plots import confusion_matrix, svm_importances
 from Code.preprocessing.preprocess import preprocess
 
 
 if __name__ == "__main__":
-    name = "svm/SVM_GS"
+    name = "svm/SVM_GS_GAITPATIENT"
 
-    #train, test, labeltrain, labeltest = preprocess()
-    train, test, labeltrain, labeltest = \
-        preprocess(file='C:\\Users\\annin\PycharmProjects\Master-Degree-Thesis\Code\Data\Dataset-fallrisk - TUGNOSIT.xlsx')
+    train, test, labeltrain, labeltest, _ = preprocess()
+
 
     print("[SVM] Searching best params with GridSearchCV")
 

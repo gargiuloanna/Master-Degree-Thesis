@@ -7,9 +7,9 @@ from joblib import dump
 
 if __name__ == '__main__':
 
-        train, test, labeltrain, labeltest =preprocess()
+        train, test, labeltrain, labeltest, _ =preprocess()
 
-        name="RandomForest_GridSearch_gait_"
+        name="RandomForest_GridSearch_gait_patient"
 
         print("[RANDOM FOREST] Searching best params with GridSearchCV")
 

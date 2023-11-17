@@ -8,7 +8,7 @@ if __name__ == '__main__':
         name = "knn/KNN_last"
         train, test, labeltrain, labeltest = preprocess()
 
-        clf = KNeighborsClassifier(n_neighbors = 1, weights = 'uniform', algorithm = 'auto', p = 2, metric = 'minkowski', n_jobs=-1)
+        clf = KNeighborsClassifier(n_neighbors = 2, weights = 'distance', algorithm = 'auto', p = 2, metric = 'minkowski', n_jobs=-1)
 
         clf.fit(train, labeltrain)
 

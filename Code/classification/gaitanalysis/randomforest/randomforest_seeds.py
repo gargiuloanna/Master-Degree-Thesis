@@ -1,30 +1,16 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import balanced_accuracy_score, classification_report
-from Code.plotting.plots import permutation_imp, feature_importance
+from Code.plotting.plots import permutation_imp, feature_importance, confusion_matrix_gait
 from Code.evaluation.predict import predict_score
 from Code.preprocessing.preprocess import preprocess
 from joblib import dump
 import numpy as np
-import matplotlib.pyplot as plt
-import sklearn.metrics as skplt_m
-import os
 
-def confusion_matrix(classifier, data, labels, cmap, name = "Model_Confusion"):
-
-    lab_pred = classifier.predict(data)
-
-    plt.figure(figsize = (34,34))
-    cm = skplt_m.confusion_matrix(labels, lab_pred)
-    disp = skplt_m.ConfusionMatrixDisplay(confusion_matrix=cm, display_labels = ['At Risk', 'Not At Risk'])
-    disp.plot(cmap = cmap)
-    if not os.path.exists("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/plots/" + name):
-        os.mkdir("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/plots/" + name)
-
-    plt.savefig("C:/Users/annin/PycharmProjects/Master-Degree-Thesis/Code/results/plots/" + name +"_CONFUSION.png")
+#No Folds
 
 if __name__ == '__main__':
 
-    train, test, labeltrain, labeltest = preprocess()
+    train, test, labeltrain, labeltest, to_print = preprocess()
 
     seeds = np.random.randint(0, 9999999, size = 100)
 
@@ -37,13 +23,9 @@ if __name__ == '__main__':
     best_test['Training OOB Accuracy'] = 0.0
     best_test['Test Accuracy'] = 0.0
     for seed in seeds:
-        name = "Randomforest_seeds_gait_ " + str(seed)
+        name = "Randomforest_seeds_gait_patient_ " + str(seed)
 
-
-        clf = RandomForestClassifier(criterion='entropy', max_depth=8, max_features='sqrt', min_samples_split=10,
-                                 min_samples_leaf=1, n_estimators=100, random_state=seed, oob_score=balanced_accuracy_score,
-                                 class_weight='balanced')
-
+        clf = RandomForestClassifier(criterion='entropy', max_depth=3, max_features='sqrt', min_samples_split=10, min_samples_leaf=1, n_estimators=140, random_state=seed, oob_score=balanced_accuracy_score, class_weight='balanced')
         clf.fit(train, labeltrain)
 
         train_score = predict_score(clf, train, labeltrain)
@@ -83,10 +65,8 @@ if __name__ == '__main__':
     file.close()
 
     #________________________________________plots for best seed________________________________________#
-    name = "randomforest/RandomForest_BEST_MEAN" + str(best_test['Seed'])
-    clf = RandomForestClassifier(criterion='entropy', max_depth=8, max_features='sqrt', min_samples_split=10,
-                                 min_samples_leaf=1, n_estimators=100, random_state=best_test['Seed'],
-                                 oob_score=balanced_accuracy_score, class_weight='balanced')
+    name = "randomforest/RandomForest_BEST_gait" + str(best_test['Seed'])
+    clf = RandomForestClassifier(criterion='entropy', max_depth=3, max_features='sqrt', min_samples_split=10, min_samples_leaf=1, n_estimators=140, random_state=best_test['Seed'], oob_score=balanced_accuracy_score, class_weight='balanced')
 
     clf.fit(train, labeltrain)
 
@@ -94,12 +74,10 @@ if __name__ == '__main__':
     print("[RANDOM FOREST] Model Saved")
 
     # Plots
-    confusion_matrix(clf, test, labeltest, 'Blues', name=name)
+    confusion_matrix_gait(clf, test, labeltest, 'Blues', name=name)
     feature_importance(clf, train.columns, 'skyblue', name=name)
     permutation_imp(clf, test, labeltest,'skyblue', name=name)
 
     # Misclassified Samples
-    y_test = np.asarray(labeltest)
-    misclassified = np.where(y_test != clf.predict(test))
-    for ind in misclassified[0]:
-        print(test.loc[ind])
+    to_print['Predicted'] = clf.predict(test)
+    print(to_print)
