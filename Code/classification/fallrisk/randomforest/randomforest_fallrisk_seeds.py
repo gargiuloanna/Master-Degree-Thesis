@@ -1,17 +1,12 @@
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report,balanced_accuracy_score
+from sklearn.metrics import classification_report
 from Code.evaluation.predict import predict_score
-from Code.plotting.plots import confusion_matrix, random_forest_fimp, permutation_imp, feature_importance
 from Code.preprocessing.preprocess_fallrisk import preprocess_folds
 import numpy as np
-from joblib import dump, load
-import matplotlib.pyplot as plt
-import sklearn.metrics as skplt_m
-import os
 from sklearn.model_selection import StratifiedGroupKFold
 from Code.preprocessing.variance_thresholding import variance
 from Code.preprocessing.scale import scale
-import pandas as pd
+
 
 if __name__ == '__main__':
 

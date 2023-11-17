@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     # Name of the classifier
     seed = 8292973
-    name = "RandomForest_fallrisk_"+ str(seed) + "_" + str(n_folds)+"FOLDS_" + task
+    name = "RandomForest_fallrisk_"+ str(seed) + "_" + str(n_folds)+"FOLDS" + task
 
     data, labels = preprocess_folds()
     feature_import = {}
