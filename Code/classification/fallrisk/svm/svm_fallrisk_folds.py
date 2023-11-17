@@ -66,15 +66,15 @@ if __name__ == '__main__':
         to_print['Predicted'] = svm.predict(test)
 
         #Append to lists
-        train_acc.append(predict_score(svm, train, labeltrain))
-        test_acc.append(predict_score(svm, test, labeltest))
+        train_acc.append(accuracy_train)
+        test_acc.append(accuracy_test)
         f1_score.append(f1)
         precision.append(prec)
         recall.append(rec)
 
         # Print Performance
-        print("Train Accuracy: ", predict_score(svm, train, labeltrain))
-        print("Test Accuracy: ", predict_score(svm, test, labeltest))
+        print("Train Accuracy: ", accuracy_train)
+        print("Test Accuracy: ", accuracy_test)
         print(skplt_m.classification_report(labeltest, svm.predict(test), digits=2, output_dict=False, zero_division='warn'))
         print(to_print.to_markdown())
 
