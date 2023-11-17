@@ -12,7 +12,6 @@ def remove_outliers(df):
     col = pd.DataFrame()
     col['Patient'] = df['Patient']
     col['Task'] = df['Exercise']
-
     df.drop(['Patient', 'Exercise'], axis = 1, inplace = True)
     data = df.iloc[:, :-1]
 
@@ -21,7 +20,6 @@ def remove_outliers(df):
 
     df.insert(loc=0, column='Patient', value=col['Patient'], allow_duplicates=True)
     df.insert(loc=1, column='Exercise', value=col['Task'], allow_duplicates=True)
-
     for  i in range(len(data)):
         if outfor[i] == -1 and outloc[i] == -1 and not df.loc[i][0].startswith("pd"):
             print("Removed sample: ", df.loc[i][0], df.loc[i][1] )

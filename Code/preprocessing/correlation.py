@@ -7,7 +7,6 @@ def correlation(dp):
     col = pd.DataFrame()
     col['Patient'] = dp['Patient']
     col['Task'] = dp['Exercise']
-
     dp.drop(['Patient', 'Exercise'], axis=1, inplace=True)
 
     data = dp.iloc[:, :-1]
